@@ -78,12 +78,13 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-xl-4">
+    <div class="col-md-6 col-xl-4" id="totcritical">
         <div class="card mb-3 widget-content">
             <div class="widget-content-outer">
                 <div class="widget-content-wrapper">
                     <div class="widget-content-left pr-2 fsize-1">
-                        <div class="widget-numbers mt-0 fsize-3 text-warning">{{$tregUtilTotal->linkStatus["critical"]}}</div>
+                        <div class="widget-numbers mt-0 fsize-3 text-warning">{{$tregUtilTotal->linkStatus["critical"]}}
+                        </div>
                     </div>
                     <div class="widget-content-right w-100">
                         <div class="progress-bar-xs progress">

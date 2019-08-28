@@ -16,10 +16,10 @@
 					@foreach ($witelUtils as $keyTreg => $valWitel) 
                     <tr>
                         <td class="text-center">{{$valWitel->witel}}</td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-success" href="#">{{$valWitel->linkStatus["normal"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-warning" href="#">{{$valWitel->linkStatus["warning"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-danger" href="#">{{$valWitel->linkStatus["critical"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-primary" href="#">{{$valWitel->subTotal}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-success" href="{{ route('alert.detail', ['witel' => $valWitel->witel, 'category' => 'normal' ]) }}">{{$valWitel->linkStatus["normal"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-warning" href="{{ route('alert.detail', ['witel' => $valWitel->witel, 'category' => 'warning' ]) }}">{{$valWitel->linkStatus["warning"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-danger" href="{{ route('alert.detail', ['witel' => $valWitel->witel, 'category' => 'critical' ]) }}">{{$valWitel->linkStatus["critical"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-primary" href="{{ route('alert.detail', ['witel' => $valWitel->witel, 'category' => 'all' ]) }}">{{$valWitel->subTotal}}</a></td>
                     </tr>
                     @endforeach              
                 </tbody>

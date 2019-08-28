@@ -21,6 +21,7 @@ class AllBasic
 class DashboardRegionalController extends Controller
 {
     public function index(){
+        $total = BasicInfo::count();
         //NODE B OCCUPANCY OVERVIEW
         $tregUtils = [];
         $tregs = [1,2,3,4,5,6,7];
@@ -118,7 +119,7 @@ class DashboardRegionalController extends Controller
             array_push($allOccBas, $value);
         }
 
-        return view('dashboard', compact('tregUtils','tregUtilTotal','allOccBas'));
+        return view('dashboard', compact('tregUtils','tregUtilTotal','allOccBas','total'));
     }
 
     public function getOccbasBySiteIDs($timeformat, $site_ids){
@@ -283,7 +284,7 @@ class DashboardRegionalController extends Controller
       	$data_witel = BasicInfo::raw(function($collection) use ($treg){
 		return $collection->aggregate([
                 ['$match' => ['treg' => $treg ] ],
-                ['$group' => ['_id' => [ '$toUpper' => '$witel' ] ] ],
+                ['$group' => ['_id' => '$witel' ] ],
                 [ '$project' => ['_id'=> 0, 'witel'=>'$_id'] ]
             ]);
 		});
@@ -395,4 +396,88 @@ class DashboardRegionalController extends Controller
 	      	]);
      	}
     }
+
+    public function filter_inner(Request $request){
+        $treg = (int)$request->treg;
+        
+        $data_witel = BasicInfo::raw(function($collection) use ($treg){
+        return $collection->aggregate([
+                ['$match' => ['treg' => $treg ] ],
+                ['$group' => ['_id' => '$witel' ] ],
+                [ '$project' => ['_id'=> 0, 'witel'=>'$_id'] ]
+            ]);
+        });
+
+        $timerange = new UTCDateTime(strtotime('-6 hours')*1000); //to milisecond
+        
+        $witelUtils = [];
+        $witels = [];
+        $totalNormal = 0;
+        $totalWarning = 0;
+        $totalCritical = 0;
+        $totalSubTotal = 0;
+
+        foreach ($data_witel as $key => $value) {
+            array_push($witels, sprintf("%s", $value->witel));
+        }
+
+        foreach ($witels as $key => $witel) {
+            $normal = 0;
+            $warning = 0;
+            $critical = 0;
+
+            $basic_info = BasicInfo::raw(function($collection) use ($witel){
+                return $collection->find(["witel" => $witel]);
+            });
+
+            $site_ids = [];
+            foreach ($basic_info as $key => $value) {
+                array_push($site_ids, sprintf("%s", $value->site_id));
+            }
+
+            $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+
+            $witelUtil = new TregUtilization();
+            $witelUtil->witel = $witel;
+
+            foreach ($occreg as $keyOcc => $occ) {
+                if($occ->max_occ < 50 ){
+                    $normal++;
+                } else if ($occ->max_occ >= 50 && $occ->max_occ <= 70 ){
+                    $warning++;
+                } else if ($occ->max_occ > 70 ){
+                    $critical++;
+                }
+            }
+
+            $witelUtil->linkStatus = [
+                "normal" => $normal,
+                "warning" => $warning,
+                "critical" => $critical,
+            ];
+
+            $subTotal = $normal+$warning+$critical;
+            
+            $witelUtil->subTotal = $subTotal;
+
+            $totalNormal += $normal;
+            $totalWarning += $warning;
+            $totalCritical += $critical;
+            $totalSubTotal += $subTotal;
+
+            array_push($witelUtils, $witelUtil);
+        }
+            $witelUtilTotal = new TregUtilization();
+            $witelUtilTotal->linkStatus = [
+                    "normal" => $totalNormal,
+                    "warning" => $totalWarning,
+                    "critical" => $totalCritical,
+                ];
+            $witelUtilTotal->subTotal = $totalSubTotal;
+
+        return view('template.inner_witel',[
+            'witelUtilTotal' => $witelUtilTotal
+        ]);
+    }
+
 }

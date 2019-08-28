@@ -7,6 +7,30 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tabs-eg-77">
                         <div class="widget-content p-0">
+                            <?php
+                                $rowperpage = 5;
+                                $row = 0;
+
+                                // Previous Button
+                                if(isset($_POST['but_prev'])){
+                                    $row = $_POST['row'];
+                                    $row -= $rowperpage;
+                                    if( $row < 0 ){
+                                        $row = 0;
+                                    }
+                                }
+
+                                // Next Button
+                                if(isset($_POST['but_next'])){
+                                    $row = $_POST['row'];
+                                    $allcount = $total;
+
+                                    $val = $row + $rowperpage;
+                                    if( $val < $allcount ){
+                                        $row = $val;
+                                    }
+                                }
+                            ?>
                             <table class="table table-striped" id="allocc">
                                 <thead>
                                     <tr>
@@ -39,24 +63,24 @@
 
                                     <?php
                                         if($value->max_occ_today < 50){
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-success">'.$value->max_occ_today.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_today.'</div></td>';
                                         }else{
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-warning">'.$value->max_occ_today.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_today.'</div></td>';
                                         }
                                         if($value->max_occ_week < 50){
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-success">'.$value->max_occ_week.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_week.'</div></td>';
                                         }else{
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-warning">'.$value->max_occ_week.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_week.'</div></td>';
                                         }
                                         if($value->max_occ_month < 50){
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-success">'.$value->max_occ_month.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_month.'</div></td>';
                                         }else{
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-warning">'.$value->max_occ_month.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_month.'</div></td>';
                                         }
                                         if($value->max_occ_year < 50){
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-success">'.$value->max_occ_year.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_year.'</div></td>';
                                         }else{
-                                            echo '<td class="text-center"><button class="btn-transition btn btn-outline-warning">'.$value->max_occ_year.'</button></td>';
+                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_year.'</div></td>';
                                         }
                                     ?>
                                     </tr>
@@ -68,30 +92,33 @@
                             <h5 class="card-title">Page</h5> 
                             <nav class="" aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a>
-                                    </li>
+                                    
                                     <?php 
-                                        $page=1;
-                                        for($i=1;$i<=10;$i++)
-                                        if ($i != $page){
+                                        $laman_sekarang = 1;
+                                        $halaman=10;
+                                        $pages = ceil($total/$halaman);
+                                        if(isset($_GET['value'])) {
+                                            $laman_sekarang = $_GET['value'];
+                                            $laman_sekarang = ($laman_sekarang > 1) ? $laman_sekarang : 1;
+                                        }
+                                        for($i=1;$i<=10;$i++){
                                         ?>
 
                                         <li class='page-item'>
                                             <button class="page-link" value="<?php echo $i; ?>"><?php echo $i; ?></button>
                                         </li>
-                                        <?php 
-                                        }
-                                        else{ 
-                                         echo " <li class='page-item'>
-                                                    <button class='page-link'>$i</button>
-                                                </li>"; 
+                                        <?php
                                         }
                                     ?>
-                                    <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a>
+                                    <li class='page-item'>
+                                        <a href="#" class="page-link">....</a>
+                                    </li>
+                                    <li class="page-item"><button class="page-link" value="500">500</button>
                                     </li>
                                 </ul>
                             </nav>
                         </div>
+                        
                     </div>
                 </div>
             </div>

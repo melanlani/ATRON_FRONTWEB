@@ -17,10 +17,10 @@
                     @foreach ($tregUtils as $keyTreg => $valTreg) 
                     <tr>
                         <td class="text-center">{{$valTreg->treg}}</td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-success" href="#">{{$valTreg->linkStatus["normal"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-warning" href="#">{{$valTreg->linkStatus["warning"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-danger" href="#">{{$valTreg->linkStatus["critical"]}}</a></td>
-                        <td class="text-center"><a class="btn-transition btn btn-outline-primary" href="#">{{$valTreg->subTotal}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-success" href="{{ route('alertTreg.detail', ['treg' => $valTreg->treg, 'category' => 'normal' ]) }}">{{$valTreg->linkStatus["normal"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-warning" href="{{ route('alertTreg.detail', ['treg' => $valTreg->treg, 'category' => 'warning' ]) }}">{{$valTreg->linkStatus["warning"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-danger" href="{{ route('alertTreg.detail', ['treg' => $valTreg->treg, 'category' => 'critical' ]) }}">{{$valTreg->linkStatus["critical"]}}</a></td>
+                        <td class="text-center"><a class="btn-transition btn btn-outline-primary" href="{{ route('alertTreg.detail', ['treg' => $valTreg->treg, 'category' => 'all' ]) }}">{{$valTreg->subTotal}}</a></td>
                     </tr>
                     @endforeach              
                 </tbody>

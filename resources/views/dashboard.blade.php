@@ -4,7 +4,7 @@
     @include('template.head')
 </head>
 <body>
-
+    <div class="loader"></div>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include('template.navbar')
         <div class="app-main">        
@@ -26,31 +26,66 @@
 <script src="{{ asset('/assets/scripts/main.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/scripts/jquery.dataTables.js') }}" ></script>
 <script type="text/javascript">
+    $(window).load(function() {
+        $(".loader").fadeOut(3000);
+    });
+
     $(document).ready(function(){
+
+        $('#alertocc').DataTable( {});
 
         $("#filter_reg").on('change', function()
         {
         var value = $(this).val();
-          $.ajax(
-          {
-            url: '{{ URL::route("dashboard.filter") }}',
-            type: 'GET',
-            data: 'treg='+value,
-            beforeSend:function()
-            {
-              $("#table2").html('Please wait...')
-            },
-            success:function(data)
-            {
-              $("#table2").html(data);
-            },
-          });
+            $.ajax({
+                url: '{{ URL::route("dashboard.filter") }}',
+                type: 'GET',
+                data: 'treg='+value,
+                beforeSend:function()
+                {   
+                    $("#table2").html('Please wait...')
+                },
+                success:function(data)
+                {
+                    $("#table2").html(data);
+                },
+            });
+            $.ajax({
+                url: '{{ URL::route("dashboard.filter_inner") }}',
+                type: 'GET',
+                data: 'treg='+value,
+                beforeSend:function()
+                {   
+                    $("#totcritical").html('Please wait...')
+                },
+                success:function(data)
+                {
+                    $("#totcritical").html(data);
+                },
+            });
         }); 
+
+        // $(".btn-submitNext").click(function(e){
+        //     e.preventDefault();
+        //     var row = $("input[name=row]").val();
+        //     var total = 500;
+
+        //     value = 10 + 1;
+        //     if( value < total ){
+        //         row = value;
+        //     }
+        //     $.ajax({
+                
+        //         success:function(data)
+        //         {
+        //           alert(row);
+        //         },
+        //     });
+        // });
 
         $("button").click(function(){
             var page = $(this).val();
-            $.ajax(
-            {
+            $.ajax({
                 url: '{{ URL::route("dashboard.pagination") }}',
                 type: 'GET',
                 data: 'page='+page,
@@ -65,6 +100,8 @@
             });
         });
     });
+
+    
 
 </script>
 </body>

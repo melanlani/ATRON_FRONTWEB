@@ -40,4 +40,14 @@
     .btn-outline-danger:hover{
         background-color: #ce0c0c;
     }
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: .8;
+        background: url({{ asset('/assets/images/atron/loading2.gif') }}) 50% 50% no-repeat rgb(249,249,249);
+    }
     </style>
