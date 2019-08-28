@@ -84,7 +84,7 @@ class DashboardRegionalController extends Controller
 		$tregUtilTotal->subTotal = $totalSubTotal;
 
     	// //ALL DATA OCCUPANCY
-    	$topnOccbas = $this->getTopNAllTregOccbas('today',300, 0);
+    	$topnOccbas = $this->getTopNAllTregOccbas('today',250, 0);
         $resultSiteIds = [];
         foreach ($topnOccbas as $key => $value) {
             array_push($resultSiteIds, sprintf("%s", $value->site_id));
@@ -147,6 +147,7 @@ class DashboardRegionalController extends Controller
                                 '_id' => '$site_id',
                                 'dt' => [ '$last'=> '$dt' ],
                                 'site_id'=> [ '$last'=> '$site_id' ],
+                                'last_occ'=> ['$last'=> '$data.occ'],
                                 'max_occ'=> [ '$max'=> ['$arrayElemAt'=> ['$data.occ', -1] ]]
                             ]
                         ],
@@ -162,6 +163,7 @@ class DashboardRegionalController extends Controller
                             '$project' => [
                                 'dt'=>'$dt',
                                 'site_id'=>'$site_id',
+                                'last_occ' => ['$arrayElemAt'=> ['$last_occ', -1] ],
                                 'max_occ' => '$max_occ',
                                 'bw_current' => ['$arrayElemAt'=> ['$basic_info.bw_current', -1] ],
                                 'treg' => ['$arrayElemAt'=> ['$basic_info.treg',-1] ],

@@ -56,11 +56,11 @@
                 data: 'treg='+value,
                 beforeSend:function()
                 {   
-                    $("#totcritical").html('Please wait...')
+                    $("#grandtotal").html('Please wait...')
                 },
                 success:function(data)
                 {
-                    $("#totcritical").html(data);
+                    $("#grandtotal").html(data);
                 },
             });
         }); 
