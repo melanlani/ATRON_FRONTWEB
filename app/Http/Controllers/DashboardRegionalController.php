@@ -84,7 +84,7 @@ class DashboardRegionalController extends Controller
 		$tregUtilTotal->subTotal = $totalSubTotal;
 
     	// //ALL DATA OCCUPANCY
-    	$topnOccbas = $this->getTopNAllTregOccbas('today',250, 0);
+    	$topnOccbas = $this->getTopNAllTregOccbas('today',20, 0);
         $resultSiteIds = [];
         foreach ($topnOccbas as $key => $value) {
             array_push($resultSiteIds, sprintf("%s", $value->site_id));

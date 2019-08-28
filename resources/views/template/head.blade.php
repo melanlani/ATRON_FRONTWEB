@@ -50,4 +50,6 @@
         opacity: .8;
         background: url({{ asset('/assets/images/atron/loading2.gif') }}) 50% 50% no-repeat rgb(249,249,249);
     }
+    #overlay {background-color: rgba(0, 0, 0, 0.6);z-index: 999;position: absolute;left: 0;top: 0;width: 100%;height: 100%;display: none;}
+    #overlay div {position:absolute;left:50%;top:50%;margin-top:-32px;margin-left:-32px;}
     </style>
