@@ -3,9 +3,6 @@
         <div class="main-card mb-3 card">
             <div class="card-header">Data Occupancy Regional {{$tregs}} Category {{$category}}
                 <div class="btn-actions-pane-right">
-                    <button class="mb-2 mr-2 btn btn-success" data-toggle="modal" data-target="#addNode">Add Data
-                        <i class="metismenu-icon pe-7s-plus"></i>
-                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -20,8 +17,7 @@
                                         <th class="text-center">Site Name</th>
                                         <th class="text-center">BW</th>
                                         <th class="text-center">Status</th>
-                                        <th class="text-center">Info</th>
-                                        <th class="text-center">Action</th>
+                                        <th class="text-center">Category</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,12 +41,6 @@
                                                 echo '<td class="text-center"><div class="badge badge-danger">>70%</div></td>';
                                             }
                                         ?>
-                                        <td class="text-center">
-                                            <button class="btn-transition btn btn-outline-primary">Edit
-                                            </button>
-                                            <button class="btn-transition btn btn-outline-danger">Delete
-                                            </button>
-                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

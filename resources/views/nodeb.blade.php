@@ -10,8 +10,7 @@
         <div class="app-main">        
             @include('template.sidebar')
             <div class="app-main__outer">
-                <div class="app-main__inner">
-                    @include('template.inner')  
+                <div class="app-main__inner">  
                     @include('table.addmocc')                  
                 </div>
                 @include('template.footer') 

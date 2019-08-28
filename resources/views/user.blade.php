@@ -11,7 +11,6 @@
             @include('template.sidebar')
             <div class="app-main__outer">
                 <div class="app-main__inner">
-                    @include('template.inner')
                     <div id="dialog-confirm"></div>  
                     @include('table.adduser')                  
                 </div>
