@@ -88,37 +88,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Page</h5> 
-                            <nav class="" aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    
-                                    <?php 
-                                        $laman_sekarang = 1;
-                                        $halaman=10;
-                                        $pages = ceil($total/$halaman);
-                                        if(isset($_GET['value'])) {
-                                            $laman_sekarang = $_GET['value'];
-                                            $laman_sekarang = ($laman_sekarang > 1) ? $laman_sekarang : 1;
-                                        }
-                                        for($i=1;$i<=10;$i++){
-                                        ?>
 
-                                        <li class='page-item'>
-                                            <button class="page-link" value="<?php echo $i; ?>"><?php echo $i; ?></button>
-                                        </li>
-                                        <?php
-                                        }
-                                    ?>
-                                    <li class='page-item'>
-                                        <a href="#" class="page-link">....</a>
-                                    </li>
-                                    <li class="page-item"><button class="page-link" value="500">500</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        
                     </div>
                 </div>
             </div>

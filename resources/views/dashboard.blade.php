@@ -32,7 +32,7 @@
 
     $(document).ready(function(){
 
-        $('#alertocc').DataTable( {});
+        $('#allocc').DataTable( {});
 
         $("#filter_reg").on('change', function()
         {
