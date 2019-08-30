@@ -33,7 +33,7 @@
 
     $(document).ready(function(){
 
-        $('#allocc').DataTable( {});
+        // $('#allocc').DataTable( {});
 
         $("#filter_reg").on('change', function()
         {
@@ -68,42 +68,23 @@
                 },
             });
         }); 
-
-        // $(".btn-submitNext").click(function(e){
-        //     e.preventDefault();
-        //     var row = $("input[name=row]").val();
-        //     var total = 500;
-
-        //     value = 10 + 1;
-        //     if( value < total ){
-        //         row = value;
-        //     }
-        //     $.ajax({
-                
-        //         success:function(data)
-        //         {
-        //           alert(row);
-        //         },
-        //     });
-        // });
-
-        $("button").click(function(){
-            var page = $(this).val();
-            $.ajax({
-                url: '{{ URL::route("dashboard.pagination") }}',
-                type: 'GET',
-                data: 'page='+page,
-                beforeSend:function()
-                {
-                  $("#table3").html('Please wait...')
-                },
-                success:function(data)
-                {
-                  $("#table3").html(data);
-                },
-            });
-        });
+ 
     });
+    function getURL(page) {
+        $.ajax({
+            url: '{{ URL::route("dashboard.pagination") }}',
+            type: 'GET',
+            data: 'page='+page,
+            beforeSend:function()
+            {
+              $("#tabs-eg-77").html('Please wait...')
+            },
+            success:function(data)
+            {
+              $("#tabs-eg-77").html(data);
+            },
+        });
+    }
 
     
 

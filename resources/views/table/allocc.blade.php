@@ -7,30 +7,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tabs-eg-77">
                         <div class="widget-content p-0">
-                            <?php
-                                $rowperpage = 5;
-                                $row = 0;
-
-                                // Previous Button
-                                if(isset($_POST['but_prev'])){
-                                    $row = $_POST['row'];
-                                    $row -= $rowperpage;
-                                    if( $row < 0 ){
-                                        $row = 0;
-                                    }
-                                }
-
-                                // Next Button
-                                if(isset($_POST['but_next'])){
-                                    $row = $_POST['row'];
-                                    $allcount = $total;
-
-                                    $val = $row + $rowperpage;
-                                    if( $val < $allcount ){
-                                        $row = $val;
-                                    }
-                                }
-                            ?>
+                            
                             <table class="table table-striped" id="allocc">
                                 <thead>
                                     <tr>
@@ -88,7 +65,54 @@
                                 </tbody>
                             </table>
                         </div>
-
+                        <?php
+                        $length = $total;
+                        $limit = 10;
+                        $page= 0;
+                        $max_page = ceil($total/$limit);
+                        if($page < 1){
+                            $page= 1;
+                        }else if($page > $max_page){
+                            $page=$max_page;
+                        }
+                        ?>
+                        <div class="card-body">
+                            <nav class="" aria-label="Page navigation example">
+                                <ul class="pagination">
+                                <?php if($page > 1) {?>
+                                    <li class="page-item">
+                                        <button onclick="getURL('<?php echo $page-1; ?>')" class="page-link" aria-label="Prev">
+                                            <span aria-hidden="true">Prev</span>
+                                        </button>
+                                    </li>
+                                <?php }else if($page <= 1){ ?>
+                                    <li class="page-item disabled">
+                                        <div class="page-link">
+                                            <span aria-hidden="true">Prev</span>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                                    <li class="page-item">
+                                        <div class="page-link">
+                                            {{$page}}
+                                        </div>
+                                    </li>
+                                <?php if($page < $max_page) {?>
+                                    <li class="page-item">
+                                        <button onclick="getURL('<?php echo $page+1; ?>')" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">Next</span>
+                                        </button>
+                                    </li>
+                                <?php }else if($page >= $max_page){?>
+                                    <li class="page-item disabled">
+                                        <div class="page-link">
+                                            <span aria-hidden="true">Next</span>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>

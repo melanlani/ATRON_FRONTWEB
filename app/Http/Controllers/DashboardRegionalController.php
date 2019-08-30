@@ -20,7 +20,7 @@ class AllBasic
 
 class DashboardRegionalController extends Controller
 {
-    public function index(){
+    public function home(){
         $total = BasicInfo::count();
         //NODE B OCCUPANCY OVERVIEW
         $tregUtils = [];
@@ -84,7 +84,7 @@ class DashboardRegionalController extends Controller
 		$tregUtilTotal->subTotal = $totalSubTotal;
 
     	// //ALL DATA OCCUPANCY
-    	$topnOccbas = $this->getTopNAllTregOccbas('today',20, 0);
+    	$topnOccbas = $this->getTopNAllTregOccbas('today',10, 0);
         $resultSiteIds = [];
         foreach ($topnOccbas as $key => $value) {
             array_push($resultSiteIds, sprintf("%s", $value->site_id));
@@ -218,11 +218,11 @@ class DashboardRegionalController extends Controller
 							'bw_current' => -1
 						]
 					],
+                    [ 
+                        '$skip' => $skip
+                    ],
 		            [ 
 		            	'$limit' => $limit
-		            ],
-		            [ 
-		            	'$skip' => $skip
 		            ]
 		        ]
 		    );
@@ -233,15 +233,14 @@ class DashboardRegionalController extends Controller
 
     public function paginationAllOcc(Request $request){
         $page = (int)$request->page;
+        $total = BasicInfo::count();
         $limit = 10;
-        if($page!=0){
-            $totaldata = $page*10; //batasan halaman
-        } else{
-            $totaldata = 10;
+        if ($page < 1) {
+            $page = 1;
         }
-        $start = ($page>1) ? ($page * $limit) - $limit : 0;
+        $skip = ($page-1)*$limit;
         // //ALL DATA OCCUPANCY
-        $topnOccbas = $this->getTopNAllTregOccbas('today',$totaldata, $start);
+        $topnOccbas = $this->getTopNAllTregOccbas('today',$limit, $skip);
         $resultSiteIds = [];
         foreach ($topnOccbas as $key => $value) {
             array_push($resultSiteIds, sprintf("%s", $value->site_id));
@@ -276,7 +275,7 @@ class DashboardRegionalController extends Controller
             array_push($allOccBas, $value);
         }
 
-        return view('table.occfilter',['allOccBas' => $allOccBas, 'page' => $page]);
+        return view('table.occfilter',['allOccBas' => $allOccBas, 'page' => $page, 'total' => $total]);
 
     }
 
