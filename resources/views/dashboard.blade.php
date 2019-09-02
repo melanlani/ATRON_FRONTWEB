@@ -12,12 +12,9 @@
             @include('template.sidebar')
             <div class="app-main__outer">
                 <div class="app-main__inner">
-                    @include('template.inner')    
-                    <div class="row">
-                        @include('table.allstat')  
-                        @include('table.occ_reg')  
-                    </div> 
-                        @include('table.allocc')                  
+                    @include('template.inner') 
+                    @include('table.page_group')
+                    @include('table.allocc')                  
                 </div>
                 @include('template.footer') 
             </div>
@@ -47,25 +44,12 @@
                 },
                 success:function(data)
                 {
-                    $("#table2").html(data);
+                    $("#tablefilter").html(data);
                 },
                 complete:function(data){
                     // Hide image container
                     $("#overlay").hide();
                 }
-            });
-            $.ajax({
-                url: '{{ URL::route("dashboard.filter_inner") }}',
-                type: 'GET',
-                data: 'treg='+value,
-                beforeSend:function()
-                {   
-                    $("#grandtotal").html('Please wait...')
-                },
-                success:function(data)
-                {
-                    $("#grandtotal").html(data);
-                },
             });
         }); 
  

@@ -28,7 +28,7 @@
                 <td class="text-center">{{substr($value->site_name, 0, 17)}}</td>
                 <td class="text-center">{{$value->bw_current}}</td>
                 <td class="text-center"><i class="pe-7s-angle-up-circle icon-gradient bg-malibu-beach" style="font-size:35px"></i></td>
-                <td class="text-center"></td>
+                <td class="text-center">{{$value->last_occ}}</td>
 
             <?php
                 if($value->max_occ_today < 50){

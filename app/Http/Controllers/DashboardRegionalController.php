@@ -281,204 +281,189 @@ class DashboardRegionalController extends Controller
 
     public function filter(Request $request){
     	$treg = (int)$request->treg;
-		
-      	$data_witel = BasicInfo::raw(function($collection) use ($treg){
-		return $collection->aggregate([
-                ['$match' => ['treg' => $treg ] ],
-                ['$group' => ['_id' => '$witel' ] ],
-                [ '$project' => ['_id'=> 0, 'witel'=>'$_id'] ]
-            ]);
-		});
 
-    	$timerange = new UTCDateTime(strtotime('-6 hours')*1000); //to milisecond
-    	
-    	$witelUtils = [];
-        $witels = [];
-        $totalNormal = 0;
-        $totalWarning = 0;
-        $totalCritical = 0;
-        $totalSubTotal = 0;
-
-        foreach ($data_witel as $key => $value) {
-            array_push($witels, sprintf("%s", $value->witel));
-        }
-
-        foreach ($witels as $key => $witel) {
-	        $normal = 0;
-	        $warning = 0;
-	        $critical = 0;
-
-            $basic_info = BasicInfo::raw(function($collection) use ($witel){
-                return $collection->find(["witel" => $witel]);
+        if($treg != 'all'){
+            $data_witel = BasicInfo::raw(function($collection) use ($treg){
+            return $collection->aggregate([
+                    ['$match' => ['treg' => $treg ] ],
+                    ['$group' => ['_id' => '$witel' ] ],
+                    [ '$project' => ['_id'=> 0, 'witel'=>'$_id'] ]
+                ]);
             });
 
-            $site_ids = [];
-            foreach ($basic_info as $key => $value) {
-                array_push($site_ids, sprintf("%s", $value->site_id));
-            }
-
-            $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
-
-            $witelUtil = new TregUtilization();
-            $witelUtil->witel = $witel;
-
-            foreach ($occreg as $keyOcc => $occ) {
-                if($occ->max_occ < 50 ){
-                    $normal++;
-                } else if ($occ->max_occ >= 50 && $occ->max_occ <= 70 ){
-                    $warning++;
-                } else if ($occ->max_occ > 70 ){
-                    $critical++;
-                }
-            }
-
-            $witelUtil->linkStatus = [
-			    "normal" => $normal,
-			    "warning" => $warning,
-			    "critical" => $critical,
-			];
-
-			$subTotal = $normal+$warning+$critical;
+            $timerange = new UTCDateTime(strtotime('-6 hours')*1000); //to milisecond
             
-            $witelUtil->subTotal = $subTotal;
+            $witelUtils = [];
+            $witels = [];
+            $totalNormal = 0;
+            $totalWarning = 0;
+            $totalCritical = 0;
+            $totalSubTotal = 0;
 
-            $totalNormal += $normal;
-            $totalWarning += $warning;
-            $totalCritical += $critical;
-            $totalSubTotal += $subTotal;
-
-            array_push($witelUtils, $witelUtil);
-        }
-        	$witelUtilTotal = new TregUtilization();
-	        $witelUtilTotal->linkStatus = [
-				    "normal" => $totalNormal,
-				    "warning" => $totalWarning,
-				    "critical" => $totalCritical,
-				];
-			$witelUtilTotal->subTotal = $totalSubTotal;
-       	
-       	if(count($data_witel)=="0"){
-        	echo "
-         	<div class='main-card mb-3 card'>
-		        <div class='card-header'>NODE B OCCUPANCY OVERVIEW
-		        </div>
-		        <div class='table-responsive'>
-		            <table class='table table-striped'>
-		         		<thead>
-						    <tr>
-						        <th class='text-center'>Witel</th>
-						        <th class='text-center'><div class='badge badge-success'><50%</div></th>
-						        <th class='text-center'><div class='badge badge-warning'>50%-70%</div></th>
-						        <th class='text-center'><div class='badge badge-danger'>>70%</div></th>
-						        <th class='text-center'><div class='badge badge-primary'>Total</div></th>
-						    </tr>
-						</thead>
-						<tbody>
-							<tr>
-						        <td class='text-center' align='center' colspan='5'>No Data Found Under This TREG</td>
-						    </tr>
-						</tbody>
-						<tfoot>
-		                    <tr>
-		                        <th class='text-center'>Total</th>
-		                        <th class='text-center'><div class='badge badge-success'></div></th>
-		                        <th class='text-center'><div class='badge badge-warning'></div></th>
-		                        <th class='text-center'><div class='badge badge-danger'></div></th>
-		                        <th class='text-center'><div class='badge badge-primary'></div></th>
-		                    </tr>
-		                </tfoot>
-		            </table>
-		        </div>
-		    </div>
-			    ";
-       	}else{
-	       	return view('table.occwitel',[
-	        	'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
-	      	]);
-     	}
-    }
-
-    public function filter_inner(Request $request){
-        $treg = (int)$request->treg;
-        
-        $data_witel = BasicInfo::raw(function($collection) use ($treg){
-        return $collection->aggregate([
-                ['$match' => ['treg' => $treg ] ],
-                ['$group' => ['_id' => '$witel' ] ],
-                [ '$project' => ['_id'=> 0, 'witel'=>'$_id'] ]
-            ]);
-        });
-
-        $timerange = new UTCDateTime(strtotime('-6 hours')*1000); //to milisecond
-        
-        $witelUtils = [];
-        $witels = [];
-        $totalNormal = 0;
-        $totalWarning = 0;
-        $totalCritical = 0;
-        $totalSubTotal = 0;
-
-        foreach ($data_witel as $key => $value) {
-            array_push($witels, sprintf("%s", $value->witel));
-        }
-
-        foreach ($witels as $key => $witel) {
-            $normal = 0;
-            $warning = 0;
-            $critical = 0;
-
-            $basic_info = BasicInfo::raw(function($collection) use ($witel){
-                return $collection->find(["witel" => $witel]);
-            });
-
-            $site_ids = [];
-            foreach ($basic_info as $key => $value) {
-                array_push($site_ids, sprintf("%s", $value->site_id));
+            foreach ($data_witel as $key => $value) {
+                array_push($witels, sprintf("%s", $value->witel));
             }
 
-            $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+            foreach ($witels as $key => $witel) {
+                $normal = 0;
+                $warning = 0;
+                $critical = 0;
 
-            $witelUtil = new TregUtilization();
-            $witelUtil->witel = $witel;
+                $basic_info = BasicInfo::raw(function($collection) use ($witel){
+                    return $collection->find(["witel" => $witel]);
+                });
 
-            foreach ($occreg as $keyOcc => $occ) {
-                if($occ->max_occ < 50 ){
-                    $normal++;
-                } else if ($occ->max_occ >= 50 && $occ->max_occ <= 70 ){
-                    $warning++;
-                } else if ($occ->max_occ > 70 ){
-                    $critical++;
+                $site_ids = [];
+                foreach ($basic_info as $key => $value) {
+                    array_push($site_ids, sprintf("%s", $value->site_id));
                 }
+
+                $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+
+                $witelUtil = new TregUtilization();
+                $witelUtil->witel = $witel;
+
+                foreach ($occreg as $keyOcc => $occ) {
+                    if($occ->max_occ < 50 ){
+                        $normal++;
+                    } else if ($occ->max_occ >= 50 && $occ->max_occ <= 70 ){
+                        $warning++;
+                    } else if ($occ->max_occ > 70 ){
+                        $critical++;
+                    }
+                }
+
+                $witelUtil->linkStatus = [
+                    "normal" => $normal,
+                    "warning" => $warning,
+                    "critical" => $critical,
+                ];
+
+                $subTotal = $normal+$warning+$critical;
+                
+                $witelUtil->subTotal = $subTotal;
+
+                $totalNormal += $normal;
+                $totalWarning += $warning;
+                $totalCritical += $critical;
+                $totalSubTotal += $subTotal;
+
+                array_push($witelUtils, $witelUtil);
+            }
+                $witelUtilTotal = new TregUtilization();
+                $witelUtilTotal->linkStatus = [
+                        "normal" => $totalNormal,
+                        "warning" => $totalWarning,
+                        "critical" => $totalCritical,
+                    ];
+                $witelUtilTotal->subTotal = $totalSubTotal;
+            
+            if(count($data_witel)=="0"){
+                echo "
+                <div class='main-card mb-3 card'>
+                    <div class='card-header'>NODE B OCCUPANCY OVERVIEW
+                    </div>
+                    <div class='table-responsive'>
+                        <table class='table table-striped'>
+                            <thead>
+                                <tr>
+                                    <th class='text-center'>Witel</th>
+                                    <th class='text-center'><div class='badge badge-success'><50%</div></th>
+                                    <th class='text-center'><div class='badge badge-warning'>50%-70%</div></th>
+                                    <th class='text-center'><div class='badge badge-danger'>>70%</div></th>
+                                    <th class='text-center'><div class='badge badge-primary'>Total</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class='text-center' align='center' colspan='5'>No Data Found Under This TREG</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class='text-center'>Total</th>
+                                    <th class='text-center'><div class='badge badge-success'></div></th>
+                                    <th class='text-center'><div class='badge badge-warning'></div></th>
+                                    <th class='text-center'><div class='badge badge-danger'></div></th>
+                                    <th class='text-center'><div class='badge badge-primary'></div></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                    ";
+            }else{
+                return view('table.page_group_filter',[
+                    'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
+                ]);
+            }
+        }else{
+            //NODE B OCCUPANCY OVERVIEW
+            $tregUtils = [];
+            $tregs = [1,2,3,4,5,6,7];
+            $totalNormal = 0;
+            $totalWarning = 0;
+            $totalCritical = 0;
+            $totalSubTotal = 0;
+
+            foreach ($tregs as $key => $treg) {
+                $normal = 0;
+                $warning = 0;
+                $critical = 0;
+                $basic_info = BasicInfo::raw(function($collection) use ($treg){
+                    return $collection->find(["treg" => $treg]);
+                });
+
+                $site_ids = [];
+                foreach ($basic_info as $key => $value) {
+                    array_push($site_ids, sprintf("%s", $value->site_id));
+                }
+
+                $occbas = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+                $tregUtil = new TregUtilization();
+                $tregUtil->treg = $treg;
+
+                foreach ($occbas as $keyOcc => $occ) {
+                    if($occ->max_occ < 50 ){
+                        $normal++;
+                    } else if ($occ->max_occ >= 50 && $occ->max_occ <= 70 ){
+                        $warning++;
+                    } else if ($occ->max_occ > 70 ){
+                        $critical++;
+                    }
+                }
+
+                $tregUtil->linkStatus = [
+                    "normal" => $normal,
+                    "warning" => $warning,
+                    "critical" => $critical,
+                ];
+
+                $subTotal = $normal+$warning+$critical;
+                
+                $tregUtil->subTotal = $subTotal;
+
+                $totalNormal += $normal;
+                $totalWarning += $warning;
+                $totalCritical += $critical;
+                $totalSubTotal += $subTotal;
+
+                array_push($tregUtils, $tregUtil);
             }
 
-            $witelUtil->linkStatus = [
-                "normal" => $normal,
-                "warning" => $warning,
-                "critical" => $critical,
-            ];
-
-            $subTotal = $normal+$warning+$critical;
-            
-            $witelUtil->subTotal = $subTotal;
-
-            $totalNormal += $normal;
-            $totalWarning += $warning;
-            $totalCritical += $critical;
-            $totalSubTotal += $subTotal;
-
-            array_push($witelUtils, $witelUtil);
-        }
-            $witelUtilTotal = new TregUtilization();
-            $witelUtilTotal->linkStatus = [
+            $tregUtilTotal = new TregUtilization();
+            $tregUtilTotal->linkStatus = [
                     "normal" => $totalNormal,
                     "warning" => $totalWarning,
                     "critical" => $totalCritical,
                 ];
-            $witelUtilTotal->subTotal = $totalSubTotal;
+            $tregUtilTotal->subTotal = $totalSubTotal;
 
-        return view('template.inner_witel',[
-            'witelUtilTotal' => $witelUtilTotal
-        ]);
+            return view('table.page_group',[
+                'tregUtils' => $tregUtils, 'tregUtilTotal' => $tregUtilTotal
+            ]);
+        }	
+      	
     }
 
 }

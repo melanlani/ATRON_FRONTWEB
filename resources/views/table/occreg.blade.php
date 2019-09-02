@@ -1,9 +1,8 @@
-<div class="col-md-7">
-    <div class="main-card mb-3 card">
-        <div class="card-header">NODE B OCCUPANCY OVERVIEW
-        </div>
+<div class="main-card mb-3 card">
+    <div class="card-header">NODE B OCCUPANCY OVERVIEW
+    </div>
         <div class="table-responsive">
-            <table class="table table-striped">
+			<table class="table table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">Regional</th>
@@ -34,6 +33,6 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
-    </div>
-</div>
+		</div>
+	</div>
+        
