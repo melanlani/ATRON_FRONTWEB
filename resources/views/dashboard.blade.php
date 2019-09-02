@@ -5,7 +5,7 @@
 </head>
 <body>
     <div class="loader"></div>
-    <div id="overlay"><div><img src="{{ asset('/assets/images/atron/loading2.gif') }}" width="64px" height="64px"/></div></div>
+    <div id="overlay"><div><img src="{{ asset('/assets/images/atron/loading2.gif') }}" width="64px" height="64px"/></div>loading</div>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include('template.navbar')
         <div class="app-main">        

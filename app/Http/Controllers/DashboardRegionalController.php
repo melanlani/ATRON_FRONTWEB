@@ -358,45 +358,10 @@ class DashboardRegionalController extends Controller
                     ];
                 $witelUtilTotal->subTotal = $totalSubTotal;
             
-            if(count($data_witel)=="0"){
-                echo "
-                <div class='main-card mb-3 card'>
-                    <div class='card-header'>NODE B OCCUPANCY OVERVIEW
-                    </div>
-                    <div class='table-responsive'>
-                        <table class='table table-striped'>
-                            <thead>
-                                <tr>
-                                    <th class='text-center'>Witel</th>
-                                    <th class='text-center'><div class='badge badge-success'><50%</div></th>
-                                    <th class='text-center'><div class='badge badge-warning'>50%-70%</div></th>
-                                    <th class='text-center'><div class='badge badge-danger'>>70%</div></th>
-                                    <th class='text-center'><div class='badge badge-primary'>Total</div></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class='text-center' align='center' colspan='5'>No Data Found Under This TREG</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th class='text-center'>Total</th>
-                                    <th class='text-center'><div class='badge badge-success'></div></th>
-                                    <th class='text-center'><div class='badge badge-warning'></div></th>
-                                    <th class='text-center'><div class='badge badge-danger'></div></th>
-                                    <th class='text-center'><div class='badge badge-primary'></div></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-                    ";
-            }else{
+            
                 return view('table.page_group_filter',[
                     'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
                 ]);
-            }
         }else{
             //NODE B OCCUPANCY OVERVIEW
             $tregUtils = [];
