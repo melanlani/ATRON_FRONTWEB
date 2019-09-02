@@ -359,9 +359,9 @@ class DashboardRegionalController extends Controller
                 $witelUtilTotal->subTotal = $totalSubTotal;
             
             
-                return view('table.page_group_filter',[
-                    'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
-                ]);
+            return view('table.page_group_filter',[
+                'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
+            ]);
         }else{
             //NODE B OCCUPANCY OVERVIEW
             $tregUtils = [];

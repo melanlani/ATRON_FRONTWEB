@@ -13,8 +13,18 @@
 				        <th class="text-center"><div class="badge badge-primary">Total</div></th>
 				    </tr>
 				</thead>
-				<tbody>
-					@foreach ($witelUtils as $keyTreg => $valWitel) 
+
+                <?php if(count($witelUtils)=="0"){
+                ?>
+                <tbody>
+                    <tr>
+                        <td class='text-center' align='center' colspan='5'>No Data Found Under This TREG</td>
+                    </tr>
+                </tbody>
+                <?php
+                }else{ ?>
+                <tbody>
+                    @foreach ($witelUtils as $keyTreg => $valWitel) 
                     <tr>
                         <td class="text-center">{{$valWitel->witel}}</td>
                         <td class="text-center"><a class="btn-transition btn btn-outline-success" href="{{ route('alert.detail', ['witel' => $valWitel->witel, 'category' => 'normal' ]) }}">{{$valWitel->linkStatus["normal"]}}</a></td>
@@ -24,6 +34,7 @@
                     </tr>
                     @endforeach              
                 </tbody>
+                <?php } ?>
                 <tfoot>
                     <tr>
                         <th class="text-center">Total</th>
