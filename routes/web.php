@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'DashboardRegionalController@home')->name('home');
 
 Route::get('home', 'DashboardRegionalController@home')->name('home');
 Route::get('home/{page}', 'DashboardRegionalController@home')->name('home.paginate');

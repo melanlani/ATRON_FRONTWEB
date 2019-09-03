@@ -5,7 +5,6 @@
 </head>
 <body>
     <div class="loader"></div>
-    <div id="overlay"><div><img src="{{ asset('/assets/images/atron/loading2.gif') }}" width="64px" height="64px"/></div>loading</div>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include('template.navbar')
         <div class="app-main">        
@@ -40,7 +39,7 @@
                 type: 'GET',
                 data: 'treg='+value,
                 beforeSend: function(){
-                    $("#overlay").show();
+                    $(".loader").show();
                 },
                 success:function(data)
                 {
@@ -48,7 +47,7 @@
                 },
                 complete:function(data){
                     // Hide image container
-                    $("#overlay").hide();
+                    $(".loader").hide();
                 }
             });
         }); 
@@ -61,12 +60,16 @@
             data: 'page='+page,
             beforeSend:function()
             {
-              $("#tabs-eg-77").html('Please wait...')
+              $(".loader").show();
             },
             success:function(data)
             {
               $("#tabs-eg-77").html(data);
             },
+            complete:function(data){
+                // Hide image container
+                $(".loader").hide();
+            }
         });
     }
 
