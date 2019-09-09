@@ -2,6 +2,15 @@
     <div class="col-md-12">            
         <div class="main-card mb-3 card">
             <div class="card-header">All Data Occupancy
+                <div class="btn-actions-pane-right">
+                    <form class="form-inline">
+                        <div class="position-relative form-group">
+                            <input name="occupancy" id="allocupancy" placeholder="Search...." type="text" class="mr-2 form-control">
+                        </div>
+                        <button class="btn btn-primary">Search</button>
+                        <button class="btn btn-danger">Reset </button>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 <div class="tab-content">
@@ -39,27 +48,35 @@
                                         <td class="text-center">{{$value->last_occ}}</td>
 
                                     <?php
-                                        if($value->max_occ_today < 50){
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_today.'</div></td>';
-                                        }else{
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_today.'</div></td>';
-                                        }
-                                        if($value->max_occ_week < 50){
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_week.'</div></td>';
-                                        }else{
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_week.'</div></td>';
-                                        }
-                                        if($value->max_occ_month < 50){
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_month.'</div></td>';
-                                        }else{
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_month.'</div></td>';
-                                        }
-                                        if($value->max_occ_year < 50){
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_year.'</div></td>';
-                                        }else{
-                                            echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_year.'</div></td>';
-                                        }
-                                    ?>
+                                            if($value->max_occ_today < 50){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_today.'</div></td>';
+                                            }else if($value->max_occ_today >= 50 && $value->max_occ_today <= 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_today.'</div></td>';
+                                            }else if($value->max_occ_today > 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$value->max_occ_today.'</div></td>';
+                                            }
+                                            if($value->max_occ_week < 50){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_week.'</div></td>';
+                                            }else if($value->max_occ_week >= 50 && $value->max_occ_week <= 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_week.'</div></td>';
+                                            }else if($value->max_occ_week > 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$value->max_occ_week.'</div></td>';
+                                            }
+                                            if($value->max_occ_month < 50){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_month.'</div></td>';
+                                            }else if($value->max_occ_month >= 50 && $value->max_occ_month <= 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_month.'</div></td>';
+                                            }else if($value->max_occ_month > 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$value->max_occ_month.'</div></td>';
+                                            }
+                                            if($value->max_occ_year < 50){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$value->max_occ_year.'</div></td>';
+                                            }else if($value->max_occ_year >= 50 && $value->max_occ_year <= 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$value->max_occ_year.'</div></td>';
+                                            }else if($value->max_occ_year > 70){
+                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$value->max_occ_year.'</div></td>';
+                                            }
+                                        ?>
                                     </tr>
                                     @endforeach 
                                 </tbody>
@@ -76,7 +93,7 @@
                             $page=$max_page;
                         }
                         ?>
-                        <div class="card-body">
+                        <div class="d-block text-center card-footer">
                             <nav class="" aria-label="Page navigation example">
                                 <ul class="pagination">
                                 <?php if($page > 1) {?>

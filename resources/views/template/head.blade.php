@@ -19,6 +19,9 @@
     .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
         background-color: #d41515;
     }
+    .hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner::before, .hamburger.is-active .hamburger-inner::after{
+        background-color: #d41515;
+    }
     .app-theme-white .app-footer .app-footer__inner, .app-theme-white .app-header{
         background: #ffffff;
     }

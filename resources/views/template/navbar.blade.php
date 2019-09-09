@@ -109,6 +109,23 @@
             </div>
             <div class="modal-body">
                 <form class="">
+                    <div class="position-relative form-group"><label for="dataBw" class="">Regional</label>
+                        <select type="select" name="regional" class="custom-select" id="regional" data-dependent="regional">
+                            <option value="">Choose Treg</option>
+                            <option value="1">TREG 1</option>
+                            <option value="2">TREG 2</option>
+                            <option value="3">TREG 3</option>
+                            <option value="4">TREG 4</option>
+                            <option value="5">TREG 5</option>
+                            <option value="6">TREG 6</option>
+                            <option value="7">TREG 7</option>
+                        </select>
+                    </div>
+                    <div class="position-relative form-group"><label for="dataBw" class="">Witel</label>
+                        <select type="select" name="witel" class="custom-select" id="witel" data-dependent="witel">
+                            <option value="">Choose Witel</option>
+                        </select>
+                    </div>
                     <div class="position-relative form-group"><label for="dataBw" class="">Bandwidth</label>
                         <input name="bw_current" id="dataBw" placeholder="" type="text" class="form-control">
                     </div>
@@ -119,7 +136,7 @@
                         <input name="bw_current" id="dataBw" placeholder="" type="text" class="form-control">
                     </div>
                     <div class="position-relative form-group"><label for="dataBw" class="">Port Uplink</label>
-                        <select name="select" id="exampleSelect" class="form-control">
+                        <select name="select" id="exampleSelect" class="custom-select">
                             <option>0/0/1</option>
                             <option>0/0/0</option>
                             <option>...</option>

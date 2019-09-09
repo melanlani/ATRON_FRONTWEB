@@ -16,6 +16,7 @@ Route::get('/', 'DashboardRegionalController@home')->name('home');
 Route::get('home', 'DashboardRegionalController@home')->name('home');
 Route::get('home/{page}', 'DashboardRegionalController@home')->name('home.paginate');
 Route::get('nodeb', ['as' => 'nodeb', 'uses' => 'NodebController@index']); 
+Route::get('/nodeb/witel', 'NodebController@findWitel')->name('nodeb.witel');
 Route::get('user', ['as' => 'user', 'uses' => 'UserController@index']);
 Route::get('/Dashboard/filter', 'DashboardRegionalController@filter')->name('dashboard.filter');
 Route::get('/Dashboard/filterinner', 'DashboardRegionalController@filter_inner')->name('dashboard.filter_inner');

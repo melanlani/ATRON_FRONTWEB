@@ -25,6 +25,24 @@
 
         $('#allocc').DataTable({});
         $('#occreg').DataTable({});
+
+        $("#regional").on('change', function()
+        {
+            if($(this).val() != ''){
+                var value = $(this).val();
+                var dependent = $(this).data('dependent');
+                $.ajax({
+                    url: '{{ URL::route("nodeb.witel") }}',
+                    type: 'GET',
+                    data: 'treg='+value,
+                    success:function(data)
+                    {
+                        $("#witel").html(data);
+                    }
+                });   
+            }
+        
+        });
     });
 
 </script>

@@ -32,36 +32,152 @@ class AlertWitelController extends Controller
         $occwitel = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
 
  		if($category == 'normal'){
- 			$occAlert=[];
+ 			$resultSiteIds=[];
 	        foreach ($occwitel as $key => $value) {
 	            //<50
 	            if($value->max_occ < 50){    
-	        		array_push($occAlert, $value);
+	        		array_push($resultSiteIds, sprintf("%s", $value->site_id));
 	        	}
 	        }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
 	        
  		} else if($category == 'warning'){
- 			$occAlert=[];
+ 			$resultSiteIds=[];
 	        foreach ($occwitel as $key => $value) {
 	            //>=50
 	            if($value->max_occ >= 50 && $value->max_occ <= 70){    
-	        		array_push($occAlert, $value);
+	        		array_push($resultSiteIds, sprintf("%s", $value->site_id));
 	        	}
 	        }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
 
  		} else if($category == 'critical'){
- 			$occAlert=[];
+ 			$resultSiteIds=[];
 	        foreach ($occwitel as $key => $value) {
 	            //>70
 	            if($value->max_occ > 70){    
-	        		array_push($occAlert, $value);
+	        		array_push($resultSiteIds, sprintf("%s", $value->site_id));
 	        	}
 	        }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
  		} else if($category == 'all'){
- 			$occAlert=[];
+ 			$resultSiteIds=[];
 	        foreach ($occwitel as $key => $value) {  
-	        	array_push($occAlert, $value);
+	        	array_push($resultSiteIds, sprintf("%s", $value->site_id));
 	        }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
  		}
 
         return view('alert',['occAlert' => $occAlert, 'witel' => $witel, 'category' => $category]);
@@ -81,37 +197,153 @@ class AlertWitelController extends Controller
         $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
 
  		if($category == 'normal'){
- 			$occAlert=[];
-	        foreach ($occreg as $key => $value) {
-	            //<50
-	            if($value->max_occ < 50){    
-	        		array_push($occAlert, $value);
-	        	}
-	        }
-	        
- 		} else if($category == 'warning'){
- 			$occAlert=[];
-	        foreach ($occreg as $key => $value) {
-	            //>=50
-	            if($value->max_occ >= 50 && $value->max_occ <= 70){    
-	        		array_push($occAlert, $value);
-	        	}
-	        }
+            $resultSiteIds=[];
+            foreach ($occreg as $key => $value) {
+                //<50
+                if($value->max_occ < 50){    
+                    array_push($resultSiteIds, sprintf("%s", $value->site_id));
+                }
+            }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
 
- 		} else if($category == 'critical'){
- 			$occAlert=[];
-	        foreach ($occreg as $key => $value) {
-	            //>70
-	            if($value->max_occ > 70){    
-	        		array_push($occAlert, $value);
-	        	}
-	        }
- 		} else if($category == 'all'){
- 			$occAlert=[];
-	        foreach ($occreg as $key => $value) {  
-	        	array_push($occAlert, $value);
-	        }
- 		}
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
+            
+        } else if($category == 'warning'){
+            $resultSiteIds=[];
+            foreach ($occreg as $key => $value) {
+                //>=50
+                if($value->max_occ >= 50 && $value->max_occ <= 70){    
+                    array_push($resultSiteIds, sprintf("%s", $value->site_id));
+                }
+            }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
+
+        } else if($category == 'critical'){
+            $resultSiteIds=[];
+            foreach ($occreg as $key => $value) {
+                //>70
+                if($value->max_occ > 70){    
+                    array_push($resultSiteIds, sprintf("%s", $value->site_id));
+                }
+            }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
+        } else if($category == 'all'){
+            $resultSiteIds=[];
+            foreach ($occreg as $key => $value) {  
+                array_push($resultSiteIds, sprintf("%s", $value->site_id));
+            }
+            $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+            $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+            $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+            $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+            $occAlert=[];
+            foreach ($occbasToday as $key => $value) {
+                //Today
+                $value->max_occ_today = $value->max_occ;
+                //Week
+                foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                    if($value->site_id == $valueWeek->site_id){
+                        $value->max_occ_week = $valueWeek->max_occ;
+                    }
+                }
+                //Month
+                foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                    if($value->site_id == $valueMonth->site_id){
+                        $value->max_occ_month = $valueMonth->max_occ;
+                    }
+                }
+                //Year
+                foreach ($occbasYear as $keyYear => $valueYear) {
+                    if($value->site_id == $valueYear->site_id){
+                        $value->max_occ_year = $valueYear->max_occ;
+                    }
+                }
+                array_push($occAlert, $value);
+            }
+        }
 
         return view('alertTreg',['occAlert' => $occAlert, 'tregs' => $tregs, 'category' => $category]);
     }
@@ -141,6 +373,7 @@ class AlertWitelController extends Controller
                                 '_id' => '$site_id',
                                 'dt' => [ '$last'=> '$dt' ],
                                 'site_id'=> [ '$last'=> '$site_id' ],
+                                'last_occ'=> ['$last'=> '$data.occ'],
                                 'max_occ'=> [ '$max'=> ['$arrayElemAt'=> ['$data.occ', -1] ]]
                             ]
                         ],
@@ -156,6 +389,7 @@ class AlertWitelController extends Controller
                             '$project' => [
                                 'dt'=>'$dt',
                                 'site_id'=>'$site_id',
+                                'last_occ' => ['$arrayElemAt'=> ['$last_occ', -1] ],
                                 'max_occ' => '$max_occ',
                                 'bw_current' => ['$arrayElemAt'=> ['$basic_info.bw_current', -1] ],
                                 'treg' => ['$arrayElemAt'=> ['$basic_info.treg',-1] ],
