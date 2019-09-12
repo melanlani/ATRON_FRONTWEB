@@ -360,7 +360,7 @@ class DashboardRegionalController extends Controller
             
             
             return view('table.page_group_filter',[
-                'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal
+                'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal, 'treg'=>$treg
             ]);
         }else{
             //NODE B OCCUPANCY OVERVIEW

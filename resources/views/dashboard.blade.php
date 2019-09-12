@@ -51,7 +51,7 @@
                 }
             });
         }); 
- 
+
     });
     function getURL(page) {
         $.ajax({
@@ -72,8 +72,6 @@
             }
         });
     }
-
-    
 
 </script>
 </body>

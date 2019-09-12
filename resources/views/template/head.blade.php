@@ -12,6 +12,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/jquery.dataTables.css') }}">
     <style type="text/css">
+    body{
+        font-size: .8rem;
+    }
     .app-header__logo .logo-src{
         background: url({{ asset('/assets/images/atron/logo-inverse.png') }});
         width: 150px; height: 54px; margin-left: 22px

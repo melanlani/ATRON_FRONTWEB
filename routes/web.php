@@ -21,9 +21,14 @@ Route::get('user', ['as' => 'user', 'uses' => 'UserController@index']);
 Route::get('/Dashboard/filter', 'DashboardRegionalController@filter')->name('dashboard.filter');
 Route::get('/Dashboard/filterinner', 'DashboardRegionalController@filter_inner')->name('dashboard.filter_inner');
 Route::get('/Dashboard/pagination', 'DashboardRegionalController@paginationAllOcc')->name('dashboard.pagination');
-// Route::get('/home/page/{page}', 'DashboardRegionalController@paginationAllOcc')->name('home.paginate');
 Route::get('/witel/{witel}/category/{category}', 'AlertWitelController@alertdetail')->name('alert.detail');
 Route::get('/treg/{treg}/category/{category}', 'AlertWitelController@alertTregdetail')->name('alertTreg.detail');
+Route::get('/grafik/{site_name}/siteid/{site_id}', 'AlertWitelController@alertgrafik')->name('alert.grafik');
+Route::get('/boxes/all', 'BoxesController@occCriticalAll')->name('boxes.all');
+Route::get('/boxes/{treg}', 'BoxesController@occCriticalTreg')->name('boxes.treg');
+
+//notes
+// Route::get('/home/page/{page}', 'DashboardRegionalController@paginationAllOcc')->name('home.paginate');
 // Route::get('/witel/{id}/category/{category}', function ($id, $category) {
 //     return "Witel {$id}";
 // })->name('alert.detail');

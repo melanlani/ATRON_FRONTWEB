@@ -65,7 +65,7 @@
                     <div class="text-muted opacity-6">OCCUPANCY >70</div>
                 </div>
                 <div class="widget-content-right fsize-1">
-                    <a class="btn btn-warning" href="#">
+                    <a class="btn btn-warning" href="{{ route('boxes.treg', ['treg' => $treg]) }}">
                         More Info
                     </a>
                 </div>

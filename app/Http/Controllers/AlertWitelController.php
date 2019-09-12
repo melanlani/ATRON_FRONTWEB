@@ -16,7 +16,10 @@ class TregUtilization
 class AlertWitelController extends Controller
 {
     public function index(){
+    }
 
+    public function alertgrafik($site_name,$site_id){
+        return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name]);
     }
 
     public function alertdetail($witel, $category){
