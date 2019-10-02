@@ -52,13 +52,13 @@ class AlertWitelController extends Controller
         foreach ($occgraf as $key => $value) {
             foreach ($value->data as $dataOcc) {
                 array_push($occ, $dataOcc->occ);
-                array_push($date, $dataOcc->minutes);
+                array_push($date, $value->dt);
             }
         }
 
-        return $date;
+        // return $date;
 
-        // return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
+        return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
     }
 
     public function alertdetail($witel, $category){
