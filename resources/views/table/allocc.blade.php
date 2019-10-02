@@ -2,15 +2,6 @@
     <div class="col-md-12">            
         <div class="main-card mb-3 card">
             <div class="card-header">All Data Occupancy
-                <div class="btn-actions-pane-right">
-                    <form class="form-inline">
-                        <div class="position-relative form-group">
-                            <input name="occupancy" id="allocupancy" placeholder="Search...." type="text" class="mr-2 form-control">
-                        </div>
-                        <button class="btn btn-primary">Search</button>
-                        <button class="btn btn-danger">Reset </button>
-                    </form>
-                </div>
             </div>
             <div class="card-body">
                 <div class="tab-content">

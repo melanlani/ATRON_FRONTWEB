@@ -28,11 +28,11 @@
             <div class="widget-content-outer">
                 <div class="widget-content-wrapper">
                     <div class="widget-content-left pr-2 fsize-1">
-                        <div class="widget-numbers mt-0 fsize-3 text-red">58</div>
+                        <div class="widget-numbers mt-0 fsize-3 text-info">58</div>
                     </div>
                     <div class="widget-content-right w-100">
                         <div class="progress-bar-xs progress">
-                            <div class="progress-bar bg-red" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100" style="width: 58%;"></div>
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100" style="width: 58%;"></div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="text-muted opacity-6">DOWN</div>
                 </div>
                 <div class="widget-content-right fsize-1">
-                    <a class="btn btn-danger" href="#" id="down">
+                    <a class="btn btn-info" href="#" id="down">
                         More Info
                     </a>
                 </div>
@@ -52,12 +52,12 @@
             <div class="widget-content-outer">
                 <div class="widget-content-wrapper">
                     <div class="widget-content-left pr-2 fsize-1">
-                        <div class="widget-numbers mt-0 fsize-3 text-warning">{{$witelUtilTotal->linkStatus["critical"]}}
+                        <div class="widget-numbers mt-0 fsize-3 text-danger">{{$witelUtilTotal->linkStatus["critical"]}}
                         </div>
                     </div>
                     <div class="widget-content-right w-100">
                         <div class="progress-bar-xs progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: 28%;"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: 28%;"></div>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="text-muted opacity-6">OCCUPANCY >70</div>
                 </div>
                 <div class="widget-content-right fsize-1">
-                    <a class="btn btn-warning" href="{{ route('boxes.treg', ['treg' => $treg]) }}">
+                    <a class="btn btn-danger" href="{{ route('boxes.treg', ['treg' => $treg]) }}">
                         More Info
                     </a>
                 </div>

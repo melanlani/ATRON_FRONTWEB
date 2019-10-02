@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 class NodebController extends Controller
 {
     public function index(){
-    	$basic = BasicInfo::skip(0)
-    						->take(20)
-    						->get();
+    $basic = BasicInfo::raw(function($collection){
+            return $collection->aggregate([
+                    ['$lookup' => [
+                                    'from' => 'additional_info',
+                                    'localField'=> 'site_id',
+                                    'foreignField'=> 'site_id',
+                                    'as'=> 'data'
+                                ] ],
+                    ['$limit' =>20 ]
+                ]);
+            });
     return view('nodeb',compact('basic'));
     }
 

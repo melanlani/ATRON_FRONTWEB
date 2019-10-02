@@ -37,7 +37,7 @@
                 text: '24 Hours'
             },
             xAxis: {
-                categories: ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00']
+                categories: []
             },
             yAxis: {
                 min: 0,
@@ -60,8 +60,8 @@
                 }
             },
             series: [{
-                name: 'UP',
-                data: [1,2,8,12,5,2,5,9,10,6],
+                name: 'Node b',
+                data: {!! json_encode($occ) !!},
                 color: '#3ac47d'
 
             }]

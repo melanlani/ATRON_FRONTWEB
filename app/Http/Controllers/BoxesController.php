@@ -28,7 +28,7 @@ class BoxesController extends Controller
             array_push($site_ids, sprintf("%s", $value->site_id));
         }
 
-        $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+        $occreg = $this->getOccbasBySiteIDs('today', $site_ids);
 
         $resultSiteIds=[];
         foreach ($occreg as $key => $value) {
@@ -84,7 +84,7 @@ class BoxesController extends Controller
             array_push($site_ids, sprintf("%s", $value->site_id));
         }
 
-        $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+        $occreg = $this->getOccbasBySiteIDs('today', $site_ids);
 
         $resultSiteIds=[];
         foreach ($occreg as $key => $value) {
@@ -127,8 +127,22 @@ class BoxesController extends Controller
     }
 
     public function getOccbasBySiteIDs($timeformat, $site_ids){
-    	$timerange = new UTCDateTime(strtotime($timeformat)*1000); //to milisecond
-    	$occbas = Periodic::raw(function($collection) use ($timerange, $site_ids){
+    	$starttime = 0;
+        $endtime = 0;
+        if( $timeformat == 'today'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+        }else if( $timeformat == 'this week'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
+        }else if( $timeformat == 'this month'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last month')*1000); //to milisecond
+        }else if( $timeformat == 'this year'){
+            $starttime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2020)*1000); //to milisecond
+            $endtime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2019)*1000); //to milisecond
+        }
+        $occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
                         [
                             '$match' => [
@@ -140,7 +154,7 @@ class BoxesController extends Controller
                                     ],
                                     [
                                         'dt' => [
-                                            '$gte' => $timerange
+                                            '$gt' => $endtime, '$lt' => $starttime
                                         ]
                                     ]
                                 ]

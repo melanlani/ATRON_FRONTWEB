@@ -43,7 +43,7 @@ class DashboardRegionalController extends Controller
                 array_push($site_ids, sprintf("%s", $value->site_id));
             }
 
-            $occbas = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+            $occbas = $this->getOccbasBySiteIDs('today', $site_ids);
             $tregUtil = new TregUtilization();
             $tregUtil->treg = $treg;
 
@@ -119,12 +119,28 @@ class DashboardRegionalController extends Controller
             array_push($allOccBas, $value);
         }
 
+        // $timerange = new UTCDateTime(strtotime('this month')*1000); //to milisecond
+        // echo $timerange;
         return view('dashboard', compact('tregUtils','tregUtilTotal','allOccBas','total'));
     }
 
     public function getOccbasBySiteIDs($timeformat, $site_ids){
-    	$timerange = new UTCDateTime(strtotime($timeformat)*1000); //to milisecond
-    	$occbas = Periodic::raw(function($collection) use ($timerange, $site_ids){
+        $starttime = 0;
+        $endtime = 0;
+        if( $timeformat == 'today'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+        }else if( $timeformat == 'this week'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
+        }else if( $timeformat == 'this month'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last month')*1000); //to milisecond
+        }else if( $timeformat == 'this year'){
+            $starttime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2020)*1000); //to milisecond
+            $endtime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2019)*1000); //to milisecond
+        }
+    	$occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
                         [
                             '$match' => [
@@ -136,7 +152,7 @@ class DashboardRegionalController extends Controller
                                     ],
                                     [
                                         'dt' => [
-                                            '$gte' => $timerange
+                                            '$gt' => $endtime, '$lt' => $starttime
                                         ]
                                     ]
                                 ]
@@ -291,7 +307,7 @@ class DashboardRegionalController extends Controller
                 ]);
             });
 
-            $timerange = new UTCDateTime(strtotime('-6 hours')*1000); //to milisecond
+            $timerange = new UTCDateTime(strtotime('today')*1000); //to milisecond
             
             $witelUtils = [];
             $witels = [];
@@ -318,7 +334,7 @@ class DashboardRegionalController extends Controller
                     array_push($site_ids, sprintf("%s", $value->site_id));
                 }
 
-                $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+                $occreg = $this->getOccbasBySiteIDs('today', $site_ids);
 
                 $witelUtil = new TregUtilization();
                 $witelUtil->witel = $witel;
@@ -384,7 +400,7 @@ class DashboardRegionalController extends Controller
                     array_push($site_ids, sprintf("%s", $value->site_id));
                 }
 
-                $occbas = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+                $occbas = $this->getOccbasBySiteIDs('today', $site_ids);
                 $tregUtil = new TregUtilization();
                 $tregUtil->treg = $treg;
 

@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="{{ asset('/assets/images/atron/logo-inverse.png') }}" type="image/x-icon">
     <title>ATRON- Do It Easy And Achieve More.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="description" content="Wide icons selection including from flag icons to FontAwesome and other icons libraries.">
     <meta name="msapplication-tap-highlight" content="no">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/pe-icon-7-stroke.css') }}">
@@ -17,7 +17,8 @@
     }
     .app-header__logo .logo-src{
         background: url({{ asset('/assets/images/atron/logo-inverse.png') }});
-        width: 150px; height: 54px; margin-left: 22px
+        width: 150px; height: 54px; margin-left: 35px; background-repeat: no-repeat;
+
     }
     .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
         background-color: #d41515;
@@ -55,5 +56,13 @@
         z-index: 9999;
         opacity: .8;
         background: url({{ asset('/assets/images/atron/loading2.gif') }}) 50% 50% no-repeat rgb(249,249,249);
+    }
+    .btn-primary{
+        background-color: #4b86b4;
+        border-color: #4b86b4;
+    }
+    .btn-success{
+        background-color: #65c3ba;
+        border-color: #65c3ba;
     }
     </style>

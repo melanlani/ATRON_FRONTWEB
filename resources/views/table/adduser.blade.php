@@ -29,9 +29,9 @@
                                         <td class="text-center">1234</td>
                                         <td class="text-center">Admin</td>
                                         <td class="text-center">
-                                            <button class="mb-2 mr-2 btn btn-primary" data-toggle="modal" data-target="#editUser">Edit
+                                            <button class="mb-2 mr-2 btn btn-primary" title="Edit"><i class="metismenu-icon pe-7s-note"></i>
                                             </button>
-                                            <button class="mb-2 mr-2 btn btn-danger" onclick="myFunction()">Delete
+                                            <button class="mb-2 mr-2 btn btn-danger" title="Delete" onclick="myFunction()"><i class="metismenu-icon pe-7s-trash"></i>
                                             </button>
                                         </td>
                                     </tr>

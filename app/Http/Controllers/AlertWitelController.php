@@ -19,7 +19,46 @@ class AlertWitelController extends Controller
     }
 
     public function alertgrafik($site_name,$site_id){
-        return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name]);
+        $starttime = 0;
+        $endtime = 0;
+        $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+        $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+        $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
+                    return $collection->aggregate([
+                        [
+                            '$match'=>[
+                                '$and'=>[
+                                    [
+                                        'site_id'=> $site_id
+                                    ],
+                                    [
+                                        'dt'=>[
+                                            '$gt' => $endtime
+                                        ]
+                                    ],
+                                    [
+                                        'dt'=>[
+                                            '$lt' => $starttime
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                );
+            });
+        $occ=[];
+        $date=[];
+        foreach ($occgraf as $key => $value) {
+            foreach ($value->data as $dataOcc) {
+                array_push($occ, $dataOcc->occ);
+                array_push($date, $dataOcc->minutes);
+            }
+        }
+
+        return $date;
+
+        // return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
     }
 
     public function alertdetail($witel, $category){
@@ -32,7 +71,7 @@ class AlertWitelController extends Controller
             array_push($site_ids, sprintf("%s", $value->site_id));
         }
 
-        $occwitel = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+        $occwitel = $this->getOccbasBySiteIDs('today', $site_ids);
 
  		if($category == 'normal'){
  			$resultSiteIds=[];
@@ -197,7 +236,7 @@ class AlertWitelController extends Controller
             array_push($site_ids, sprintf("%s", $value->site_id));
         }
 
-        $occreg = $this->getOccbasBySiteIDs('-6 hours', $site_ids);
+        $occreg = $this->getOccbasBySiteIDs('today', $site_ids);
 
  		if($category == 'normal'){
             $resultSiteIds=[];
@@ -352,8 +391,22 @@ class AlertWitelController extends Controller
     }
 
     public function getOccbasBySiteIDs($timeformat, $site_ids){
-    	$timerange = new UTCDateTime(strtotime($timeformat)*1000); //to milisecond
-    	$occbas = Periodic::raw(function($collection) use ($timerange, $site_ids){
+    	$starttime = 0;
+        $endtime = 0;
+        if( $timeformat == 'today'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+        }else if( $timeformat == 'this week'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
+        }else if( $timeformat == 'this month'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime('last month')*1000); //to milisecond
+        }else if( $timeformat == 'this year'){
+            $starttime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2020)*1000); //to milisecond
+            $endtime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2019)*1000); //to milisecond
+        }
+        $occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
                         [
                             '$match' => [
@@ -365,7 +418,7 @@ class AlertWitelController extends Controller
                                     ],
                                     [
                                         'dt' => [
-                                            '$gte' => $timerange
+                                            '$gt' => $endtime, '$lt' => $starttime
                                         ]
                                     ]
                                 ]

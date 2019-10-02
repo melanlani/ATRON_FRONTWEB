@@ -20,13 +20,13 @@
                                         <th class="text-center">Site ID</th>
                                         <th class="text-center">Site Name</th>
                                         <th class="text-center">BW</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Current Occupancy</th>
+                                        <th class="text-center">Port Uplink</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($basic as $all)
+                                        @foreach ($all['data'] as $data)
                                     <tr>
                                         <td class="text-center">{{$all['treg']}}</td>
                                         <td class="text-center">{{$all['witel']}}</td>
@@ -35,15 +35,15 @@
                                         </td>
                                         <td class="text-center">{{$all['site_name']}}</td>
                                         <td class="text-center">{{$all['bw_current']}}</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
+                                        <td class="text-center">{{$data['port_uplink']}}</td>
                                         <td class="text-center">
-                                            <button class="mb-2 mr-2 btn btn-primary">Edit
+                                            <button class="mb-2 mr-2 btn btn-primary" title="Edit"><i class="metismenu-icon pe-7s-note"></i>
                                             </button>
-                                            <button class="mb-2 mr-2 btn btn-danger">Delete
+                                            <button class="mb-2 mr-2 btn btn-danger" title="Delete"><i class="metismenu-icon pe-7s-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>

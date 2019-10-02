@@ -8,7 +8,7 @@
                     <tr>
                         <th class="text-center">Regional</th>
                         <th class="text-center"><div class="badge badge-success">UP</div></th>
-                        <th class="text-center"><div class="badge badge-danger">Down</div></th>
+                        <th class="text-center"><div class="badge badge-info">Down</div></th>
                         <th class="text-center"><div class="badge badge-primary">Total</div></th>
                     </tr>
                 </thead>

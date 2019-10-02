@@ -11,6 +11,7 @@
                     <li class="nav-item"><a class="nav-link second-tab-toggle" id="month">A month</a></li>
                 </ul>
             </div>
+
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tabs-eg-77">
