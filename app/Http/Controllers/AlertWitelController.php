@@ -22,7 +22,7 @@ class AlertWitelController extends Controller
         $starttime = 0;
         $endtime = 0;
         $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-        $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+        $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
         $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
                     return $collection->aggregate([
                         [
@@ -52,13 +52,13 @@ class AlertWitelController extends Controller
         foreach ($occgraf as $key => $value) {
             foreach ($value->data as $dataOcc) {
                 array_push($occ, $dataOcc->occ);
-                array_push($date, $value->dt);
+                array_push($date, ($dataOcc->minutes * 60000));
             }
         }
 
-        // return $date;
+        return $date;
 
-        return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
+        // return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
     }
 
     public function alertdetail($witel, $category){
@@ -395,7 +395,7 @@ class AlertWitelController extends Controller
         $endtime = 0;
         if( $timeformat == 'today'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
         }else if( $timeformat == 'this week'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
             $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond

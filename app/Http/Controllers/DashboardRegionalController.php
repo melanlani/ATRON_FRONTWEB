@@ -129,7 +129,7 @@ class DashboardRegionalController extends Controller
         $endtime = 0;
         if( $timeformat == 'today'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last days')*1000); //to milisecond
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
         }else if( $timeformat == 'this week'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
             $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
