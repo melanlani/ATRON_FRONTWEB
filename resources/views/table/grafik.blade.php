@@ -7,7 +7,7 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item"><a class="active nav-link" id="day">A day</a></li>
-                    <li class="nav-item"><a class="nav-link" id="week">A week</a></li>
+                    <li class="nav-item"><a class="nav-link" id="week" onclick="getURL('<?php echo $site_name; ?>', '<?php echo $site_id; ?>')">A week</a></li>
                     <li class="nav-item"><a class="nav-link second-tab-toggle" id="month">A month</a></li>
                 </ul>
             </div>

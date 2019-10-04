@@ -24,6 +24,7 @@ Route::get('/Dashboard/pagination', 'DashboardRegionalController@paginationAllOc
 Route::get('/witel/{witel}/category/{category}', 'AlertWitelController@alertdetail')->name('alert.detail');
 Route::get('/treg/{treg}/category/{category}', 'AlertWitelController@alertTregdetail')->name('alertTreg.detail');
 Route::get('/grafik/{site_name}/siteid/{site_id}', 'AlertWitelController@alertgrafik')->name('alert.grafik');
+Route::get('/grafik/filter', 'AlertWitelController@alertgrafikFilter')->name('alert.grafikFilter');
 Route::get('/boxes/treg/all', 'BoxesController@occCriticalAll')->name('boxes.all');
 Route::get('/boxes/treg/{treg}', 'BoxesController@occCriticalTreg')->name('boxes.treg');
 

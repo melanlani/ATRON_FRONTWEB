@@ -59,12 +59,110 @@ class AlertWitelController extends Controller
             $timehour = (int)$value->dt->toDateTime()->format('U');
             foreach ($value->data as $dataOcc) {
                 $timeminutes = $dataOcc->minutes*60;
-                array_push($dateOcc, date("H:i", substr($timehour+$timeminutes,0,10)));
+                array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
                 array_push($occ, $dataOcc->occ);    
             }    
         }
         
         return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ, 'dateOcc' => $dateOcc]);
+    }
+
+    public function alertgrafikFilter(Request $request){
+        $starttime = 0;
+        $endtime = 0;
+        $site_id = $request->site_id;
+        $site_name = $request->site_name;
+        $filter = $request->filter;
+
+        if($filter == 'day'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
+            $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
+                        return $collection->aggregate([
+                            [
+                                '$match'=>[
+                                    '$and'=>[
+                                        [
+                                            'site_id'=> $site_id
+                                        ],
+                                        [
+                                            'dt'=>[
+                                                '$gt' => $endtime
+                                            ]
+                                        ],
+                                        [
+                                            'dt'=>[
+                                                '$lt' => $starttime
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    );
+                });
+            $occ=[];
+            $minutesOcc=[];
+            $epoch=[];
+            $epochMinutes=[];
+            $epochHours=[];
+            $dateOcc=[];
+            date_default_timezone_set('Asia/Jakarta');
+
+            foreach ($occgraf as $key => $value) {
+                $timehour = (int)$value->dt->toDateTime()->format('U');
+                foreach ($value->data as $dataOcc) {
+                    $timeminutes = $dataOcc->minutes*60;
+                    array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
+                    array_push($occ, $dataOcc->occ);    
+                }    
+            }
+        } else if($filter == 'week'){
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
+            $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
+                        return $collection->aggregate([
+                            [
+                                '$match'=>[
+                                    '$and'=>[
+                                        [
+                                            'site_id'=> $site_id
+                                        ],
+                                        [
+                                            'dt'=>[
+                                                '$gt' => $endtime
+                                            ]
+                                        ],
+                                        [
+                                            'dt'=>[
+                                                '$lt' => $starttime
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    );
+                });
+            $occ=[];
+            $minutesOcc=[];
+            $epoch=[];
+            $epochMinutes=[];
+            $epochHours=[];
+            $dateOcc=[];
+            date_default_timezone_set('Asia/Jakarta');
+
+            foreach ($occgraf as $key => $value) {
+                $timehour = (int)$value->dt->toDateTime()->format('U');
+                foreach ($value->data as $dataOcc) {
+                    $timeminutes = $dataOcc->minutes*60;
+                    array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
+                    array_push($occ, $dataOcc->occ);    
+                }    
+            }
+        }
+
+        return view('table.grafikFilter',['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ, 'dateOcc' => $dateOcc, 'filter' => $filter]);
     }
 
     public function alertdetail($witel, $category){

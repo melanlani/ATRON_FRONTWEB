@@ -1,26 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @include('template.head')
-</head>
-<body>
+<div class="card-header-tab card-header-tab-animation card-header">
+    <div class="card-header-title">
+        Grafik {{$site_name}}({{$site_id}})
+    </div>
+    <ul class="nav">
+        <?php 
+            if($filter == 'week'){
+        ?>
+        <li class="nav-item"><a class="nav-link" id="day" href="{{ route('alert.grafik', ['site_id' => $site_id, 'site_name' => $site_name ]) }}">A day</a></li>
+        <li class="nav-item"><a class="active nav-link" id="week">A week</a></li>
+        <li class="nav-item"><a class="nav-link second-tab-toggle" id="month">A month</a></li>
+        <?php
+            }else if($filter == 'day'){
+        ?>  
+        <li class="nav-item"><a class="active nav-link" id="day">A day</a></li>
+        <li class="nav-item"><a class="nav-link" id="week" onclick="getURLDay('<?php echo $site_name; ?>', '<?php echo $site_id; ?>')">A week</a></li>
+        <li class="nav-item"><a class="nav-link second-tab-toggle" id="month">A month</a></li>
+        <?php
+            }
+        ?>
+        
+    </ul>
+</div>
 
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
-        @include('template.navbar')
-        <div class="app-main">        
-            @include('template.sidebar')
-            <div class="app-main__outer">
-                <div class="app-main__inner">  
-                    @include('table.grafik')                  
+<div class="card-body">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tabs-eg-77">
+            <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
+                <div class="widget-chat-wrapper-outer">
+                    <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                        <div id="container"></div>
+                    </div>
                 </div>
-                @include('template.footer') 
             </div>
         </div>
     </div>
-<script type="text/javascript" src="{{ asset('/assets/scripts/jquery.js') }}"></script>
-<script src="{{ asset('/assets/scripts/main.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/assets/scripts/jquery.dataTables.js') }}" ></script>
-<script src="http://code.highcharts.com/highcharts.src.js" type="text/javascript"></script>
+</div>
+
 <script type="text/javascript">
     $(function () {
         $('#container').highcharts({
@@ -31,7 +46,7 @@
                 text: 'NODE B OCCUPANCY GRAPHICS'
             },
             subtitle: {
-                text: '24 Hours'
+                text: 'One Week'
             },
             xAxis: {
                 categories: {!! json_encode($dateOcc) !!}
@@ -64,9 +79,8 @@
             }]
         });
     });
-
-    function getURL(sitename, siteid) {
-        var value = 'week';
+    function getURLDay(sitename, siteid) {
+        var value = 'day';
         $.ajax({
             url: '{{ URL::route("alert.grafikFilter") }}',
             type: 'GET',
@@ -81,7 +95,4 @@
             }
         });
     }
-
 </script>
-</body>
-</html>
