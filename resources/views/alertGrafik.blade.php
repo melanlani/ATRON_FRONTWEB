@@ -37,7 +37,7 @@
                 text: '24 Hours'
             },
             xAxis: {
-                categories: []
+                categories: {!! json_encode($dateOcc) !!}
             },
             yAxis: {
                 min: 0,

@@ -48,17 +48,23 @@ class AlertWitelController extends Controller
                 );
             });
         $occ=[];
-        $date=[];
+        $minutesOcc=[];
+        $epoch=[];
+        $epochMinutes=[];
+        $epochHours=[];
+        $dateOcc=[];
+        date_default_timezone_set('Asia/Jakarta');
+
         foreach ($occgraf as $key => $value) {
+            $timehour = (int)$value->dt->toDateTime()->format('U');
             foreach ($value->data as $dataOcc) {
-                array_push($occ, $dataOcc->occ);
-                array_push($date, ($dataOcc->minutes * 60000));
-            }
+                $timeminutes = $dataOcc->minutes*60;
+                array_push($dateOcc, date("H:i", substr($timehour+$timeminutes,0,10)));
+                array_push($occ, $dataOcc->occ);    
+            }    
         }
-
-        return $date;
-
-        // return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ]);
+        
+        return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ, 'dateOcc' => $dateOcc]);
     }
 
     public function alertdetail($witel, $category){
@@ -393,18 +399,19 @@ class AlertWitelController extends Controller
     public function getOccbasBySiteIDs($timeformat, $site_ids){
     	$starttime = 0;
         $endtime = 0;
+        date_default_timezone_set('Asia/Jakarta');
         if( $timeformat == 'today'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
             $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
         }else if( $timeformat == 'this week'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
         }else if( $timeformat == 'this month'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last month')*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of this month')))*1000); //to milisecond
         }else if( $timeformat == 'this year'){
-            $starttime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2020)*1000); //to milisecond
-            $endtime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2019)*1000); //to milisecond
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of january this year')))*1000); //to milisecond
         }
         $occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([

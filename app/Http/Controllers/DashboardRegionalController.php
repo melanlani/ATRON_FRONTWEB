@@ -127,18 +127,19 @@ class DashboardRegionalController extends Controller
     public function getOccbasBySiteIDs($timeformat, $site_ids){
         $starttime = 0;
         $endtime = 0;
+        date_default_timezone_set('Asia/Jakarta');
         if( $timeformat == 'today'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
             $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
         }else if( $timeformat == 'this week'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last week')*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
         }else if( $timeformat == 'this month'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime('last month')*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of this month')))*1000); //to milisecond
         }else if( $timeformat == 'this year'){
-            $starttime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2020)*1000); //to milisecond
-            $endtime = new UTCDateTime(mktime(0, 0, 0, 1, 1, 2019)*1000); //to milisecond
+            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of january this year')))*1000); //to milisecond
         }
     	$occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
