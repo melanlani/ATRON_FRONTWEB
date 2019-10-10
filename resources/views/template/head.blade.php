@@ -61,7 +61,7 @@
         background-color: #4b86b4;
         border-color: #4b86b4;
     }
-    .btn-success{
+    .btn-success-second {
         background-color: #65c3ba;
         border-color: #65c3ba;
     }

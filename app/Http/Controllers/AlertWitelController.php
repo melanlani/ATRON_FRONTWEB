@@ -19,10 +19,11 @@ class AlertWitelController extends Controller
     }
 
     public function alertgrafik($site_name,$site_id){
+        date_default_timezone_set('Asia/Jakarta');
         $starttime = 0;
         $endtime = 0;
-        $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-        $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
+        $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+        $endtime=new UTCDateTime(strtotime(date("Y-m-d 06:00:00"))*1000);
         $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
                     return $collection->aggregate([
                         [
@@ -48,26 +49,23 @@ class AlertWitelController extends Controller
                 );
             });
         $occ=[];
-        $minutesOcc=[];
         $epoch=[];
-        $epochMinutes=[];
-        $epochHours=[];
         $dateOcc=[];
-        date_default_timezone_set('Asia/Jakarta');
 
         foreach ($occgraf as $key => $value) {
             $timehour = (int)$value->dt->toDateTime()->format('U');
             foreach ($value->data as $dataOcc) {
                 $timeminutes = $dataOcc->minutes*60;
-                array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
+                $other = 7*60*60;
+                array_push($dateOcc, date("H:i", substr($timehour-$other+$timeminutes,0,10)));
                 array_push($occ, $dataOcc->occ);    
             }    
         }
-        
         return view('alertGrafik', ['site_id' => $site_id, 'site_name' => $site_name, 'occ' => $occ, 'dateOcc' => $dateOcc]);
     }
 
     public function alertgrafikFilter(Request $request){
+        date_default_timezone_set('Asia/Jakarta');
         $starttime = 0;
         $endtime = 0;
         $site_id = $request->site_id;
@@ -76,7 +74,7 @@ class AlertWitelController extends Controller
 
         if($filter == 'day'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 06:00:00"))*1000);
             $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
                         return $collection->aggregate([
                             [
@@ -107,19 +105,19 @@ class AlertWitelController extends Controller
             $epochMinutes=[];
             $epochHours=[];
             $dateOcc=[];
-            date_default_timezone_set('Asia/Jakarta');
 
             foreach ($occgraf as $key => $value) {
                 $timehour = (int)$value->dt->toDateTime()->format('U');
                 foreach ($value->data as $dataOcc) {
                     $timeminutes = $dataOcc->minutes*60;
-                    array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
+                    $other = 7*60*60;
+                    array_push($dateOcc, date("H:i", substr($timehour-$other+$timeminutes,0,10)));
                     array_push($occ, $dataOcc->occ);    
                 }    
             }
         } else if($filter == 'week'){
             $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('sunday last week')))*1000); //to milisecond
             $occgraf = Periodic::raw(function($collection) use ($starttime,$endtime,$site_id){
                         return $collection->aggregate([
                             [
@@ -156,7 +154,8 @@ class AlertWitelController extends Controller
                 $timehour = (int)$value->dt->toDateTime()->format('U');
                 foreach ($value->data as $dataOcc) {
                     $timeminutes = $dataOcc->minutes*60;
-                    array_push($dateOcc, date("Y-m-d H:i", substr($timehour+$timeminutes,0,10)));
+                    $other = 7*60*60;
+                    array_push($dateOcc, date("Y-m-d H:i", substr($timehour-$other+$timeminutes,0,10)));
                     array_push($occ, $dataOcc->occ);    
                 }    
             }
@@ -499,17 +498,17 @@ class AlertWitelController extends Controller
         $endtime = 0;
         date_default_timezone_set('Asia/Jakarta');
         if( $timeformat == 'today'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
-        }else if( $timeformat == 'this week'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 06:00:00"))*1000);
+        }else if( $timeformat == 'this week'){   
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('sunday last week')))*1000); //to milisecond
         }else if( $timeformat == 'this month'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of this month')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('first day of this month')))*1000); //to milisecond
         }else if( $timeformat == 'this year'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of january this year')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('first day of january this year')))*1000); //to milisecond
         }
         $occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
@@ -522,8 +521,13 @@ class AlertWitelController extends Controller
                                         ]
                                     ],
                                     [
-                                        'dt' => [
-                                            '$gt' => $endtime, '$lt' => $starttime
+                                        'dt'=>[
+                                            '$gt' => $endtime
+                                        ]
+                                    ],
+                                    [
+                                        'dt'=>[
+                                            '$lt' => $starttime
                                         ]
                                     ]
                                 ]
@@ -535,7 +539,7 @@ class AlertWitelController extends Controller
                                 'dt' => [ '$last'=> '$dt' ],
                                 'site_id'=> [ '$last'=> '$site_id' ],
                                 'last_occ'=> ['$last'=> '$data.occ'],
-                                'max_occ'=> [ '$max'=> ['$arrayElemAt'=> ['$data.occ', -1] ]]
+                                "max_occ"=> [ '$max'=> ['$max'=> '$data.occ']]
                             ]
                         ],
                         [

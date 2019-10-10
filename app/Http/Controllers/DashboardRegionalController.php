@@ -129,17 +129,17 @@ class DashboardRegionalController extends Controller
         $endtime = 0;
         date_default_timezone_set('Asia/Jakarta');
         if( $timeformat == 'today'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime=new UTCDateTime(strtotime(date("Y-m-d 00:00:00"))*1000);
-        }else if( $timeformat == 'this week'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('sunday last week')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime=new UTCDateTime(strtotime(date("Y-m-d 06:00:00"))*1000);
+        }else if( $timeformat == 'this week'){   
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('sunday last week')))*1000); //to milisecond
         }else if( $timeformat == 'this month'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of this month')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('first day of this month')))*1000); //to milisecond
         }else if( $timeformat == 'this year'){
-            $starttime = new UTCDateTime(date(time())*1000); //to milisecond
-            $endtime = new UTCDateTime(strtotime(date("Y-m-d 00:00:00", strtotime('first day of january this year')))*1000); //to milisecond
+            $starttime = new UTCDateTime((strtotime(date("H:i"))+360*60)*1000); //to milisecond
+            $endtime = new UTCDateTime(strtotime(date("Y-m-d 06:00:00", strtotime('first day of january this year')))*1000); //to milisecond
         }
     	$occbas = Periodic::raw(function($collection) use ($starttime,$endtime, $site_ids){
                     return $collection->aggregate([
@@ -152,8 +152,13 @@ class DashboardRegionalController extends Controller
                                         ]
                                     ],
                                     [
-                                        'dt' => [
-                                            '$gt' => $endtime, '$lt' => $starttime
+                                        'dt'=>[
+                                            '$gt' => $endtime
+                                        ]
+                                    ],
+                                    [
+                                        'dt'=>[
+                                            '$lt' => $starttime
                                         ]
                                     ]
                                 ]
@@ -165,7 +170,7 @@ class DashboardRegionalController extends Controller
                                 'dt' => [ '$last'=> '$dt' ],
                                 'site_id'=> [ '$last'=> '$site_id' ],
                                 'last_occ'=> ['$last'=> '$data.occ'],
-                                'max_occ'=> [ '$max'=> ['$arrayElemAt'=> ['$data.occ', -1] ]]
+                                "max_occ"=> [ '$max'=> ['$max'=> '$data.occ']]
                             ]
                         ],
                         [

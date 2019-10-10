@@ -31,7 +31,7 @@
                                         <td class="text-center">{{$value->treg}}</td>
                                         <td class="text-center">{{$value->witel}}</td>
                                         <td class="text-center">
-                                            <a class="btn-transition btn btn-outline-primary" href="#">{{$value->site_id}}</a>
+                                            <a class="btn-transition btn btn-outline-primary" href="{{ route('alert.grafik', ['site_id' => $value->site_id, 'site_name' => $value->site_name ]) }}">{{$value->site_id}}</a>
                                         </td>
                                         <td class="text-center">{{substr($value->site_name, 0, 17)}}</td>
                                         <td class="text-center">{{$value->bw_current}}</td>

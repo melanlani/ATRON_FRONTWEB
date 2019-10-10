@@ -3,7 +3,7 @@
         <div class="main-card mb-3 card">
             <div class="card-header">All Data User
                 <div class="btn-actions-pane-right">
-                    <button class="mb-2 mr-2 btn btn-success" data-toggle="modal" data-target="#addUser">Add Data
+                    <button class="mb-2 mr-2 btn btn-success-second" data-toggle="modal" data-target="#addUser">Add Data
                         <i class="metismenu-icon pe-7s-plus"></i>
                     </button>
                 </div>
