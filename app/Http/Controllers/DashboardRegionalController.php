@@ -20,6 +20,11 @@ class AllBasic
 
 class DashboardRegionalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function home(){
         $total = BasicInfo::count();
         //NODE B OCCUPANCY OVERVIEW

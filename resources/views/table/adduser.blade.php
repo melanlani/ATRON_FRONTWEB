@@ -15,26 +15,27 @@
                             <table class="table table-striped" id="alluser">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">NIK</th>
+                                        <th class="text-center">Nama</th>
+                                        <th class="text-center">Username</th>
                                         <th class="text-center">Email</th>
-                                        <th class="text-center">Password</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">1312123122</td>
-                                        <td class="text-center">atronteam@yahoo.com</td>
-                                        <td class="text-center">1234</td>
-                                        <td class="text-center">Admin</td>
-                                        <td class="text-center">
-                                            <button class="mb-2 mr-2 btn btn-primary" title="Edit"><i class="metismenu-icon pe-7s-note"></i>
-                                            </button>
-                                            <button class="mb-2 mr-2 btn btn-danger" title="Delete" onclick="myFunction()"><i class="metismenu-icon pe-7s-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    @foreach($users as $data)
+                                        <tr>
+                                            <td class="text-center">{{$data->name}}</td>
+                                            <td class="text-center">{{$data->username}}</td>
+                                            <td class="text-center">{{$data->email}}</td>
+                                            <td class="text-center">{{$data->role}}</td>
+                                            <td class="text-center">
+                                                <button class="mb-2 mr-2 btn btn-primary" title="Edit"><i class="metismenu-icon pe-7s-note"></i>
+                                                </button>
+                                                <a href="/user/delete/{{ $data->id }}" class="mb-2 mr-2 btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="metismenu-icon pe-7s-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

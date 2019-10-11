@@ -33,25 +33,33 @@
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Menu</li>
-                <li>
-                    <a href="{{ URL::route('home') }}">
-                        <i class="metismenu-icon pe-7s-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ URL::route('nodeb') }}">
-                        <i class="metismenu-icon pe-7s-signal"></i>
-                        Node B Administration
-                    </a>
-                </li>
-                <li >
-                    <a href="{{ URL::route('user') }}">
-                        <i class="metismenu-icon pe-7s-user"></i>
-                        User Administration 
-                    </a>
-                </li>
-                
+                @if (Auth::user()->role == 'Admin')
+                    <li>
+                        <a href="{{ URL::route('home') }}">
+                            <i class="metismenu-icon pe-7s-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ URL::route('nodeb') }}">
+                            <i class="metismenu-icon pe-7s-signal"></i>
+                            Node B Administration
+                        </a>
+                    </li>
+                    <li >
+                        <a href="{{ URL::route('user') }}">
+                            <i class="metismenu-icon pe-7s-user"></i>
+                            User Administration 
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ URL::route('home') }}">
+                            <i class="metismenu-icon pe-7s-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

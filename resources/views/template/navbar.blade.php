@@ -38,15 +38,21 @@
                     <div class="widget-content-wrapper">
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">
-                                Admin
+                                {{ Auth::user()->name }}
                             </div>
                             <div class="widget-subheading">
-                                1312123122- Admin
+                                1312123122- {{ Auth::user()->name }}
                             </div>
                         </div>
                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                             <button type="button" tabindex="0" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Edit Profil</button>
-                            <button type="button" tabindex="0" class="dropdown-item">Logout</button>
+                            <button type="button" tabindex="0" class="dropdown-item" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}</button>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                     </div>
                 </a>
@@ -164,31 +170,35 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="">
-                    <div class="position-relative form-group"><label for="dataBw" class="">NIK</label>
-                        <input name="bw_current" id="dataBw" placeholder="" type="text" class="form-control">
-                    </div>
+                <form method="POST" action="/user/store">
+                        {{ csrf_field() }}
                     <div class="position-relative form-group"><label for="dataBw" class="">Nama</label>
-                        <input name="bw_current" id="dataBw" placeholder="" type="text" class="form-control">
+                        <input id="name" type="text" class="form-control" name="name">
                     </div>
+
+                    <div class="position-relative form-group"><label for="dataBw" class="">Username</label>
+                        <input id="username" type="text" class="form-control" name="username">
+                    </div>
+
                     <div class="position-relative form-group"><label for="dataBw" class="">Email</label>
-                        <input name="bw_current" id="dataBw" placeholder="" type="email" class="form-control">
+                        <input id="email" type="email" class="form-control" name="email">
                     </div>
+
                     <div class="position-relative form-group"><label for="dataBw" class="">Password</label>
-                        <input name="bw_current" id="dataBw" placeholder="" type="password" class="form-control">
+                        <input id="password" type="password" class="form-control" name="password">
                     </div>
                     <div class="position-relative form-group"><label for="dataBw" class="">Role</label>
-                        <select name="select" id="exampleSelect" class="form-control">
-                            <option>SA</option>
-                            <option>Admin</option>
-                            <option>User</option>
+                        <select name="role" class="form-control">
+                            <option value="SA">SA</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
                         </select>
                     </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
