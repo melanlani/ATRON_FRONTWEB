@@ -30,7 +30,7 @@
                                             <td class="text-center">{{$data->email}}</td>
                                             <td class="text-center">{{$data->role}}</td>
                                             <td class="text-center">
-                                                <button class="mb-2 mr-2 btn btn-primary" title="Edit"><i class="metismenu-icon pe-7s-note"></i>
+                                                <button class="mb-2 mr-2 btn btn-primary" title="Edit" data-toggle="modal" data-target="#editUsers"><i class="metismenu-icon pe-7s-note"></i>
                                                 </button>
                                                 <a href="/user/delete/{{ $data->id }}" class="mb-2 mr-2 btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="metismenu-icon pe-7s-trash"></i></a>
                                             </td>
@@ -45,4 +45,5 @@
         </div>
     </div>
 </div>
+
 

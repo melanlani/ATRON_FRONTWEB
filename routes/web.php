@@ -24,6 +24,7 @@ Route::get('/nodeb/witel', 'NodebController@findWitel')->name('nodeb.witel');
 
 Route::get('user', ['as' => 'user', 'uses' => 'UserController@index']);
 Route::post('/user/store','UserController@store');
+Route::get('/user/edit/{id}','UserController@edit');
 Route::get('/user/delete/{id}','UserController@delete');
 
 Route::get('/Dashboard/filter', 'DashboardRegionalController@filter')->name('dashboard.filter');

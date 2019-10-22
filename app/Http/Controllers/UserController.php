@@ -31,6 +31,15 @@ class UserController extends Controller
 	 
 	}
 
+	public function edit($id)
+	{
+		// mengambil data pegawai berdasarkan id yang dipilih
+		$user = DB::table('users')->where('id',$id)->get();
+		// passing data pegawai yang didapat ke view edit.blade.php
+		return view('user',['user' => $user]);
+
+	}
+
 	public function delete($id)
 	{
 		// menghapus data pegawai berdasarkan id yang dipilih
