@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/nodeb';
+    protected $redirectTo = '/home';
     protected $username = 'username';
 
     /**
