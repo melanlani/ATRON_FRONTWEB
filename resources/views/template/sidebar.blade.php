@@ -33,7 +33,14 @@
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Menu</li>
-                @if (Auth::user()->role == 'Admin')
+                @if (Auth::user()->role == 'User')
+                    <li>
+                        <a href="{{ URL::route('home') }}">
+                            <i class="metismenu-icon pe-7s-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                @else
                     <li>
                         <a href="{{ URL::route('home') }}">
                             <i class="metismenu-icon pe-7s-home"></i>
@@ -50,13 +57,6 @@
                         <a href="{{ URL::route('user') }}">
                             <i class="metismenu-icon pe-7s-user"></i>
                             User Administration 
-                        </a>
-                    </li>
-                @else
-                    <li>
-                        <a href="{{ URL::route('home') }}">
-                            <i class="metismenu-icon pe-7s-home"></i>
-                            Dashboard
                         </a>
                     </li>
                 @endif

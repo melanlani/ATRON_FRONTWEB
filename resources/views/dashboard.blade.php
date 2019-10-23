@@ -12,8 +12,7 @@
             <div class="app-main__outer">
                 <div class="app-main__inner">
                     @include('template.inner') 
-                    @include('table.page_group')
-                    @include('table.allocc')                  
+                    @include('table.page_group')                
                 </div>
                 @include('template.footer') 
             </div>

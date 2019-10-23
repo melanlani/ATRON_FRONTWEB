@@ -89,44 +89,44 @@ class DashboardRegionalController extends Controller
 		$tregUtilTotal->subTotal = $totalSubTotal;
 
     	// //ALL DATA OCCUPANCY
-    	$topnOccbas = $this->getTopNAllTregOccbas('today',10, 0);
-        $resultSiteIds = [];
-        foreach ($topnOccbas as $key => $value) {
-            array_push($resultSiteIds, sprintf("%s", $value->site_id));
-        }
-        $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
-        $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
-        $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
-        $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+    	// $topnOccbas = $this->getTopNAllTregOccbas('today',10, 0);
+     //    $resultSiteIds = [];
+     //    foreach ($topnOccbas as $key => $value) {
+     //        array_push($resultSiteIds, sprintf("%s", $value->site_id));
+     //    }
+     //    $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+     //    $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+     //    $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+     //    $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
 
-        $allOccBas=[];
-        foreach ($occbasToday as $key => $value) {
-            //Today
-            $value->max_occ_today = $value->max_occ;
-            //Week
-            foreach ($occbasWeek as $keyWeek => $valueWeek) {
-                if($value->site_id == $valueWeek->site_id){
-                    $value->max_occ_week = $valueWeek->max_occ;
-                }
-            }
-            //Month
-            foreach ($occbasMonth as $keyMonth => $valueMonth) {
-                if($value->site_id == $valueMonth->site_id){
-                    $value->max_occ_month = $valueMonth->max_occ;
-                }
-            }
-            //Year
-            foreach ($occbasYear as $keyYear => $valueYear) {
-                if($value->site_id == $valueYear->site_id){
-                    $value->max_occ_year = $valueYear->max_occ;
-                }
-            }
-            array_push($allOccBas, $value);
-        }
+     //    $allOccBas=[];
+     //    foreach ($occbasToday as $key => $value) {
+     //        //Today
+     //        $value->max_occ_today = $value->max_occ;
+     //        //Week
+     //        foreach ($occbasWeek as $keyWeek => $valueWeek) {
+     //            if($value->site_id == $valueWeek->site_id){
+     //                $value->max_occ_week = $valueWeek->max_occ;
+     //            }
+     //        }
+     //        //Month
+     //        foreach ($occbasMonth as $keyMonth => $valueMonth) {
+     //            if($value->site_id == $valueMonth->site_id){
+     //                $value->max_occ_month = $valueMonth->max_occ;
+     //            }
+     //        }
+     //        //Year
+     //        foreach ($occbasYear as $keyYear => $valueYear) {
+     //            if($value->site_id == $valueYear->site_id){
+     //                $value->max_occ_year = $valueYear->max_occ;
+     //            }
+     //        }
+     //        array_push($allOccBas, $value);
+     //    }
 
         // $timerange = new UTCDateTime(strtotime('this month')*1000); //to milisecond
         // echo $timerange;
-        return view('dashboard', compact('tregUtils','tregUtilTotal','allOccBas','total'));
+        return view('dashboard', compact('tregUtils','tregUtilTotal','total'));
     }
 
     public function getOccbasBySiteIDs($timeformat, $site_ids){

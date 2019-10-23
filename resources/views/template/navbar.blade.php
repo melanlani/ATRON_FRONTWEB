@@ -41,7 +41,7 @@
                                 {{ Auth::user()->name }}
                             </div>
                             <div class="widget-subheading">
-                                1312123122- {{ Auth::user()->name }}
+                                {{ Auth::user()->username }} - {{ Auth::user()->role }}
                             </div>
                         </div>
                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
