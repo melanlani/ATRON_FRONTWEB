@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="widget-content-left fsize-1">
-                    <div class="text-muted opacity-6">OCCUPANCY >70</div>
+                    <div class="text-muted opacity-6">OCCUPANCY >70%</div>
                 </div>
                 <div class="widget-content-right fsize-1">
                     <a class="btn btn-danger" href="{{ route('boxes.treg', ['treg' => $treg]) }}">

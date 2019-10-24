@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                            <button type="button" tabindex="0" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Edit Profil</button>
+                            <button type="button" tabindex="0" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Edit Profile</button>
                             <button type="button" tabindex="0" class="dropdown-item" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}</button>
