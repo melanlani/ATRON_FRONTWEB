@@ -22,9 +22,7 @@
     <style type="text/css">
         #main {
             background-image: url({{ asset('/assets/images/atron/login.jpg') }});
-            height: 657px;
-            width: 1366px;
-            background-repeat: no-repeat;
+            max-width: 100%;
         }
         .card {
             margin-top: 150px;
@@ -32,11 +30,9 @@
         }
     </style>
 </head>
-<body>
-    <div id="main">
+<body id="main">
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
 </body>
 </html>

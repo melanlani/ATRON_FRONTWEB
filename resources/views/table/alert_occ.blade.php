@@ -38,43 +38,43 @@
                                         <td class="text-center">{{$all->last_occ}}</td>
                                         <?php
                                             if($all->max_occ_today < 50){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$all->max_occ_today.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-success">'.$all->max_occ_today.'</div></td>';
                                             }else if($all->max_occ_today >= 50 && $all->max_occ_today <= 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$all->max_occ_today.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-warning">'.$all->max_occ_today.'</div></td>';
                                             }else if($all->max_occ_today > 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$all->max_occ_today.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-danger">'.$all->max_occ_today.'</div></td>';
                                             }
                                             if($all->max_occ_week < 50){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$all->max_occ_week.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-success">'.$all->max_occ_week.'</div></td>';
                                             }else if($all->max_occ_week >= 50 && $all->max_occ_week <= 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$all->max_occ_week.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-warning">'.$all->max_occ_week.'</div></td>';
                                             }else if($all->max_occ_week > 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$all->max_occ_week.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-danger">'.$all->max_occ_week.'</div></td>';
                                             }
                                             if($all->max_occ_month < 50){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$all->max_occ_month.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-success">'.$all->max_occ_month.'</div></td>';
                                             }else if($all->max_occ_month >= 50 && $all->max_occ_month <= 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$all->max_occ_month.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-warning">'.$all->max_occ_month.'</div></td>';
                                             }else if($all->max_occ_month > 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$all->max_occ_month.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-danger">'.$all->max_occ_month.'</div></td>';
                                             }
                                             if($all->max_occ_year < 50){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-success">'.$all->max_occ_year.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-success">'.$all->max_occ_year.'</div></td>';
                                             }else if($all->max_occ_year >= 50 && $all->max_occ_year <= 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-warning">'.$all->max_occ_year.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-warning">'.$all->max_occ_year.'</div></td>';
                                             }else if($all->max_occ_year > 70){
-                                                echo '<td class="text-center"><div class="btn-transition btn btn-outline-danger">'.$all->max_occ_year.'</div></td>';
+                                                echo '<td class="text-center"><div class="badge badge-danger">'.$all->max_occ_year.'</div></td>';
                                             }
                                         ?>
                                         <?php 
                                             if($all['max_occ'] < 50){
-                                                echo '<td class="text-center"><div class="badge badge-success"><50%</div></td>';
+                                                echo '<td class="text-center"><div class="btn btn-success"><50%</div></td>';
                                             }
                                             else if($all['max_occ'] >= 50 && $all['max_occ'] <= 70 ){
-                                                echo '<td class="text-center"><div class="badge badge-warning">50%-70%</div></td>';
+                                                echo '<td class="text-center"><div class="btn btn-warning">50%-70%</div></td>';
                                             }
                                             else if($all['max_occ'] > 70){
-                                                echo '<td class="text-center"><div class="badge badge-danger">>70%</div></td>';
+                                                echo '<td class="text-center"><div class="btn btn-danger">>70%</div></td>';
                                             }
                                         ?>
                                         
