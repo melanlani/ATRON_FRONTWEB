@@ -23,10 +23,26 @@
         #main {
             background-image: url({{ asset('/assets/images/atron/login.jpg') }});
             max-width: 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
         }
         .card {
             margin-top: 150px;
             background-color: #ffffff7d;
+        }
+        .col-form-new-label {
+            padding-top: calc(.375rem + 1px);
+            padding-bottom: calc(.375rem + 1px);
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 0.6;
+        }
+        .text-md-center {
+            text-align: -webkit-center;
+        }
+        .text-color {
+            color: red;
         }
     </style>
 </head>

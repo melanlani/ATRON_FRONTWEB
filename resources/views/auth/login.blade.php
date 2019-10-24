@@ -68,6 +68,11 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer">
+                    <h6 class="col-md-12 col-form-new-label text-md-center">ANALYTIC TRAFFIC OCCUPANCY NETWORK</h6>
+                    <h6 class="col-md-12 col-form-new-label text-md-center">FOR COLLABORATIVE NETWORK OPTIMIZING PROJECT</h6>
+                    <h6 class="col-md-12 col-form-new-label text-md-center text-color">BY : TELKOM REGIONAL 1 & TELKOMSEL SUMATERA</h6>
+                </div>
             </div>
         </div>
     </div>
