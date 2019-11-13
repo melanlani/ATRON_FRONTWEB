@@ -31,7 +31,7 @@
                                         <td class="text-center">{{$all['treg']}}</td>
                                         <td class="text-center">{{$all['witel']}}</td>
                                         <td class="text-center">
-                                            <a class="btn-transition btn btn-outline-primary" href="#">{{$all['site_id']}}</a>
+                                            <a class="btn-transition btn btn-outline-primary" href="{{ route('alert.grafik', ['site_id' => $all->site_id, 'site_name' => $all->site_name ]) }}">{{$all['site_id']}}</a>
                                         </td>
                                         <td class="text-center">{{$all['site_name']}}</td>
                                         <td class="text-center">{{$all['bw_current']}}</td>
