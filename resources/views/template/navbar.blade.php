@@ -41,7 +41,11 @@
                                 {{ Auth::user()->name }}
                             </div>
                             <div class="widget-subheading">
-                                {{ Auth::user()->username }} - {{ Auth::user()->role }}
+                                @if(Auth::user()->role == '1' || Auth::user()->role == '2' || Auth::user()->role =='3' || Auth::user()->role =='4' || Auth::user()->role =='5' || Auth::user()->role =='6' || Auth::user()->role =='7')
+                                    {{ Auth::user()->username }} - User Reg {{ Auth::user()->role }}
+                                @else
+                                    {{ Auth::user()->username }} - {{ Auth::user()->role }}
+                                @endif
                             </div>
                         </div>
                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -189,9 +193,15 @@
                     </div>
                     <div class="position-relative form-group"><label for="dataBw" class="">Role</label>
                         <select name="role" class="form-control">
-                            <option value="SA">SA</option>
+                            <option value="SA">Super Admin</option>
                             <option value="Admin">Admin</option>
-                            <option value="User">User</option>
+                            <option value="1">User Regional 1</option>
+                            <option value="2">User Regional 2</option>
+                            <option value="3">User Regional 3</option>
+                            <option value="4">User REgional 4</option>
+                            <option value="5">User Regional 5</option>
+                            <option value="6">User REgional 6</option>
+                            <option value="7">User Regional 7</option>
                         </select>
                     </div>
                     <div class="modal-footer">

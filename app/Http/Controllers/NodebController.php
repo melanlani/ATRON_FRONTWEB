@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\BasicInfo;
 
+use App\BasicInfo;
 use Illuminate\Http\Request;
 
 class NodebController extends Controller

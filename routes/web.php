@@ -22,7 +22,9 @@ Route::get('home/{page}', 'DashboardRegionalController@home')->name('home.pagina
 Route::get('nodeb', ['as' => 'nodeb', 'uses' => 'NodebController@index']); 
 Route::get('/nodeb/witel', 'NodebController@findWitel')->name('nodeb.witel');
 
-Route::get('user', ['as' => 'user', 'uses' => 'UserController@view']);
+Route::get('/nodebReg', 'NodebRegController@index')->name('nodebReg'); 
+
+Route::get('user', ['as' => 'user', 'uses' => 'UserController@index'])->middleware('akses.admin');
 Route::post('/user/store','UserController@store');
 Route::get('/user/edit/{id}','UserController@edit');
 Route::get('/user/delete/{id}','UserController@delete');

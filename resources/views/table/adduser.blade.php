@@ -28,7 +28,11 @@
                                             <td class="text-center">{{$data->name}}</td>
                                             <td class="text-center">{{$data->username}}</td>
                                             <td class="text-center">{{$data->email}}</td>
+                                            @if($data->role == '1' || $data->role == '2' || $data->role =='3' || $data->role =='4' || $data->role =='5' || $data->role =='6' || $data->role =='7')
+                                            <td class="text-center">User Regional {{$data->role}}</td>
+                                            @else 
                                             <td class="text-center">{{$data->role}}</td>
+                                            @endif
                                             <td class="text-center">
                                                 <button class="mb-2 mr-2 btn btn-primary" title="Edit" data-toggle="modal" data-target="#editUsers"><i class="metismenu-icon pe-7s-note"></i>
                                                 </button>
