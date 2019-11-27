@@ -16,6 +16,7 @@ class TregUtilization
 class NodebRegController extends Controller
 {
 	public function index(){		
+        $total = BasicInfo::count();
 		$treg= (int)Auth::user()->role;
 		//NODE B OCCUPANCY OVERVIEW
         $data_witel = BasicInfo::raw(function($collection) use ($treg){
@@ -93,8 +94,44 @@ class NodebRegController extends Controller
                 ];
             $witelUtilTotal->subTotal = $totalSubTotal;
 
+                //ALL DATA OCCUPANCY
+        $topnOccbas = $this->getTopNAllTregOccbas('today',10, 0);
+        $resultSiteIds = [];
+        foreach ($topnOccbas as $key => $value) {
+            array_push($resultSiteIds, sprintf("%s", $value->site_id));
+        }
+        $occbasToday = $this->getOccbasBySiteIDs('today', $resultSiteIds);
+        $occbasWeek = $this->getOccbasBySiteIDs('this week', $resultSiteIds);
+        $occbasMonth = $this->getOccbasBySiteIDs('this month', $resultSiteIds);
+        $occbasYear = $this->getOccbasBySiteIDs('this year', $resultSiteIds);
+
+        $allOccBas=[];
+        foreach ($occbasToday as $key => $value) {
+            //Today
+            $value->max_occ_today = $value->max_occ;
+            //Week
+            foreach ($occbasWeek as $keyWeek => $valueWeek) {
+                if($value->site_id == $valueWeek->site_id){
+                    $value->max_occ_week = $valueWeek->max_occ;
+                }
+            }
+            //Month
+            foreach ($occbasMonth as $keyMonth => $valueMonth) {
+                if($value->site_id == $valueMonth->site_id){
+                    $value->max_occ_month = $valueMonth->max_occ;
+                }
+            }
+            //Year
+            foreach ($occbasYear as $keyYear => $valueYear) {
+                if($value->site_id == $valueYear->site_id){
+                    $value->max_occ_year = $valueYear->max_occ;
+                }
+            }
+            array_push($allOccBas, $value);
+        }
+
         return view('NodebRegional',[
-                'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal, 'treg'=>$treg
+                'witelUtils' => $witelUtils, 'witelUtilTotal' => $witelUtilTotal, 'treg'=>$treg, 'allOccBas'=>$allOccBas, 'total'=>$total
             ]);
 	}
 
@@ -172,4 +209,59 @@ class NodebRegController extends Controller
             });
     	return $occbas;
     }
+
+public function getTopNAllTregOccbas($timeformat, $limit, $skip){
+        $todaytimerange = new UTCDateTime(strtotime($timeformat)*1000); //to milisecond
+        $alloccbas = Periodic::raw(function($collection) use ($todaytimerange, $limit, $skip){
+                return $collection->aggregate([
+                    [
+                        '$match' => [
+                            'dt' => [
+                                '$gte' => $todaytimerange
+                            ]
+                        ]
+                    ],
+                    [
+                        '$group' => [
+                            '_id' => '$site_id',
+                            'dt' => [ '$last'=> '$dt' ],
+                            'site_id'=> [ '$last'=> '$site_id' ],
+                            'max_occ'=> [ '$max'=> ['$arrayElemAt'=> ['$data.occ', -1] ]]
+                        ]
+                    ],
+                    [
+                        '$lookup' => [
+                            'from' => 'basic_info',
+                            'localField'=> 'site_id',
+                            'foreignField'=> 'site_id',
+                            'as'=> 'basic_info'
+                        ]
+                    ],
+                    [
+                        '$project' => [
+                            'dt'=>'$dt',
+                            'site_id'=>'$site_id',
+                            'max_occ' => '$max_occ',
+                            'bw_current' => ['$arrayElemAt'=> ['$basic_info.bw_current', -1] ],
+                            'treg' => '$basic_info.treg'
+                        ]
+                    ],
+                    [
+                        '$sort' => [
+                            'bw_current' => -1
+                        ]
+                    ],
+                    [ 
+                        '$skip' => $skip
+                    ],
+                    [ 
+                        '$limit' => $limit
+                    ]
+                ]
+            );
+        });
+
+        return $alloccbas;
+    }
+
 }

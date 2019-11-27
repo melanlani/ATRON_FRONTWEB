@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('home', 'DashboardRegionalController@home')->name('home');
 Route::get('home/{page}', 'DashboardRegionalController@home')->name('home.paginate');
 
-Route::get('nodeb', ['as' => 'nodeb', 'uses' => 'NodebController@index']); 
+Route::get('nodeb', ['as' => 'nodeb', 'uses' => 'NodebController@index'])->middleware('akses.admin'); 
 Route::get('/nodeb/witel', 'NodebController@findWitel')->name('nodeb.witel');
 
 Route::get('/nodebReg', 'NodebRegController@index')->name('nodebReg'); 

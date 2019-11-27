@@ -73,54 +73,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <?php
-                        $length = $total;
-                        $limit = 10;
-                        $page= 0;
-                        $max_page = ceil($total/$limit);
-                        if($page < 1){
-                            $page= 1;
-                        }else if($page > $max_page){
-                            $page=$max_page;
-                        }
-                        ?>
-                        <div class="d-block text-center card-footer">
-                            <nav class="" aria-label="Page navigation example">
-                                <ul class="pagination">
-                                <?php if($page > 1) {?>
-                                    <li class="page-item">
-                                        <button onclick="getURL('<?php echo $page-1; ?>')" class="page-link" aria-label="Prev">
-                                            <span aria-hidden="true">Prev</span>
-                                        </button>
-                                    </li>
-                                <?php }else if($page <= 1){ ?>
-                                    <li class="page-item disabled">
-                                        <div class="page-link">
-                                            <span aria-hidden="true">Prev</span>
-                                        </div>
-                                    </li>
-                                <?php } ?>
-                                    <li class="page-item">
-                                        <div class="page-link">
-                                            {{$page}}
-                                        </div>
-                                    </li>
-                                <?php if($page < $max_page) {?>
-                                    <li class="page-item">
-                                        <button onclick="getURL('<?php echo $page+1; ?>')" class="page-link" aria-label="Next">
-                                            <span aria-hidden="true">Next</span>
-                                        </button>
-                                    </li>
-                                <?php }else if($page >= $max_page){?>
-                                    <li class="page-item disabled">
-                                        <div class="page-link">
-                                            <span aria-hidden="true">Next</span>
-                                        </div>
-                                    </li>
-                                <?php } ?>
-                                </ul>
-                            </nav>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

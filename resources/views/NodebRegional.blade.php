@@ -41,7 +41,7 @@
 
     $(document).ready(function(){
 
-        // $('#allocc').DataTable( {});
+        $('#allocc').DataTable( {});
 
         $("#filter_reg").on('change', function()
         {

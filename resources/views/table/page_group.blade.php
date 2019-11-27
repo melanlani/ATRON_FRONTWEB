@@ -76,6 +76,6 @@
     </div>
     <div class="row">
         @include('table.allstat')  
-        @include('table.occ_reg')  
+        @include('table.occ_reg') 
     </div> 
 </div>     

@@ -76,4 +76,5 @@
 <div class="row">
     @include('table.allstat')  
     @include('table.occwitelreg')  
+    @include('table.allocc')  
 </div> 
