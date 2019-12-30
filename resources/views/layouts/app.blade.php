@@ -22,13 +22,16 @@
     <style type="text/css">
         #main {
             background-image: url({{ asset('/assets/images/atron/login.jpg') }});
-            max-width: 100%;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
+            -webkit-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            background-size: 100% 100%;
         }
         .card {
-            margin-top: 150px;
+            margin-top: 100px;
             background-color: #ffffff7d;
         }
         .col-form-new-label {
